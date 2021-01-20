@@ -57,7 +57,6 @@ namespace FantasyRpg.Player
                     }
                     else
                     {
-                        
                         defend = mob[b].MonsterCombat(hero, mob, b, defend);
                         roundVerify++;
                     }

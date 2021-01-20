@@ -128,21 +128,72 @@ namespace FantasyRpg.Enemies
 
 
         public virtual int GiveGold() { return gold; }
+        public static int CheckLevel(Hero hero)
+        {
+            int randomNumb = 0;
+            var randomNum = new Random();
+
+            if (hero.lvl < 3)
+            {
+                randomNumb = randomNum.Next(1, 3);
+                
+                
+            }
+            else if (hero.lvl < 5)
+            {
+                randomNumb = randomNum.Next(3, 5);
+                
+                
+            }
+            else if (hero.lvl < 7)
+            {
+                randomNumb = randomNum.Next(5, 7);
+                
+                
+            }
+            else
+            {
+                randomNumb = randomNum.Next(7, 9);
+                
+            }
+
+            return randomNumb;
+        }
         public static List<Monster> CreateMonster(Hero hero)
         {
-            List<Monster> mob = new List<Monster>()
-             {
-                new Rogue("Rogue"),
-                new Blob("Blob"),
-                new Tonberry("Tonberry"),
-                new Cactuar("Cactuar"),
-                new Kuja("Kuja"),
-                new Seymour("Seymour"),
-                new Sephiroth("Sephiroth"),
-                new Kefka("Kefka")
-             };
-
+            var randomNumb = CheckLevel(hero);
+            List<Monster> mob = new List<Monster>();
+                switch(randomNumb)
+                {
+                case 1:
+                mob.Add(new Rogue("Rogue"));
+                    break;
+                case 2:
+                mob.Add(new Blob("Blob"));
+                    break;
+                case 3:
+                mob.Add(new Tonberry("Tonberry"));
+                    break;
+                case 4:
+                mob.Add(new Cactuar("Cactuar"));
+                    break;
+                case 5:
+                mob.Add(new Kuja("Kuja"));
+                    break;
+                case 6:
+                mob.Add(new Seymour("Seymour"));
+                    break;
+                case 7:
+                mob.Add(new Sephiroth("Sephiroth"));
+                    break;
+                case 8:
+                mob.Add(new Kefka("Kefka"));
+                    break;
+                };
             return mob;
+
+
+
         }
     }
 }

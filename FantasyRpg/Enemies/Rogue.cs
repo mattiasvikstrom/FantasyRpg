@@ -18,8 +18,8 @@ namespace FantasyRpg.Enemies
             NameRare = "Rogue Specialist";
             hp = 800;
             damage = 20;
-            minDamage = 15;
-            maxDamage = 30;
+            minDamage = 30;
+            maxDamage = 40;
             gold = 200;
             exp = 52;
         }
