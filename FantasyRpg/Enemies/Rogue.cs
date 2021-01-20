@@ -24,20 +24,23 @@ namespace FantasyRpg.Enemies
             exp = 52;
         }
 
-        /*
-        //public int Attack() 
-        //{
-        //    int mobDamage = Game.RandomAttackDamage(minDamage, maxDamage);
-        //    return mobDamage;
-        //}
-        
-        public void AttackSpecial() { } A signature attack ex, Backstab
-        
-         
-         
-         
-         
-         */
+        public override float MonsterAttackBasic(float mobDamage)
+        {
+            Console.WriteLine($"{name} attacks you with his dagger");
+            return mobDamage;
+        }
+        public override float MonsterAttackNormal(float mobDamage)
+        {
+            Console.WriteLine($"{name} throws an explosive bomb in your direction!");
+            mobDamage *= 1.2f; 
+            return mobDamage;
+        }
+        public override float MonsterAttackSpecial(float mobDamage)
+        {
+            Console.WriteLine($"{name} vanishes.... chills come as you feel a presence behind you! Two daggers strikes!");
+            mobDamage *= 2;
+            return mobDamage;
+        }
         //maybe void.... or find neat way to hand over gold to hero.
         public override int GiveGold()
         {

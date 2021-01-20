@@ -11,14 +11,14 @@ namespace FantasyRpg.Player
         {
             Console.Clear();
             bool activeFight = true;
-
+            //Checks for possible fight
             var battleChance = BattleChance();
-            //10> battletime!
+            
             if (battleChance >= 11)
             {
                 Console.WriteLine("You encountered an opponent!");
             }
-            //10||< no danger
+            
             else
             {
                 Console.WriteLine("No danger present.. this time.");
@@ -26,6 +26,7 @@ namespace FantasyRpg.Player
             }
             //generate monster for the battle
             List<Monster> mob = Monster.CreateMonster(hero);
+            //variables something something
             var a = mob.Count;
             int b = Convert.ToInt32(a - 1);
             int i = 0;
@@ -56,8 +57,8 @@ namespace FantasyRpg.Player
                     }
                     else
                     {
-                        //Monster _mob = new Monster();
-                        defend = mob[b].Attack(hero, mob, b, defend);
+                        
+                        defend = mob[b].MonsterCombat(hero, mob, b, defend);
                         roundVerify++;
                     }
                     Continue(hero, mob, b);
@@ -201,7 +202,7 @@ namespace FantasyRpg.Player
                 heroDamage = 0;
             }
             mob[b].hp -= heroDamage;
-            Console.WriteLine($"{hero.name} attacks for {heroDamage}\n" +
+            Console.WriteLine($"{hero.name} attacks with Bloodstrike for {heroDamage}\n" +
                               $"{mob[b].name} has hp: {mob[b].hp} left");
         }
         static void AttackSpecial(Hero hero, List<Monster> mob, int b)

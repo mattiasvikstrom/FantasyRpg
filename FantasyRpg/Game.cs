@@ -16,8 +16,10 @@ namespace FantasyRpg
         public static void Start()
         {
             Console.Title = "Fantasy RPG";
-            Hero hero = CreateHero();
+            List<Merchant> startArmor = Armor.StarterArmor();
+            Hero hero = CreateHero(startArmor);
 
+            
             List<Merchant> weapon = Weapons.AddWeapon(); //om det blir problem är det säkert kring Weapons och vart listan är placerad.
             List<Merchant> armor = Armor.AddArmor();
             List<Merchant> items = Items.AddItems();
@@ -49,7 +51,7 @@ namespace FantasyRpg
                         Inn.VisitInn(hero);
                         break;
                     case "4": //Enters shop, where all equipment is located, when purchased items are auto equipped.
-                        Merchant.ItemShop(hero, items, armor, weapon);
+                        Merchant.ItemShop(hero, items, armor, weapon, startArmor);
                         break;
                     case "5": // quits game
                         activeGame = true;
@@ -65,11 +67,11 @@ namespace FantasyRpg
             } while (!activeGame);
         }
 
-        public static Hero CreateHero()
+        public static Hero CreateHero(List<Merchant> startArmor)
         {
             string heroName = Initialize();
             Hero hero = new Hero(heroName);
-            List<Merchant> startArmor = Armor.StarterArmor();
+            
             int ind = 1;
             Console.WriteLine($"\n Greeting {hero.name}, let's get you sorted with some items. It is a harsh world... \n");
             Thread.Sleep(2000);

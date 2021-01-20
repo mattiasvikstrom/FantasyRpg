@@ -16,10 +16,27 @@ namespace FantasyRpg.Enemies
             NameRare = "Mad Cactuar";
             hp = 200;
             damage = 220;
-            minDamage = 120;
-            maxDamage = 220;
+            minDamage = 30;
+            maxDamage = 70;
             gold = 2200;
-            exp = 520;
+            exp = 150;
+        }
+        public override float MonsterAttackBasic(float mobDamage)
+        {
+            Console.WriteLine($"{name} uses 100 needles!");
+            return mobDamage;
+        }
+        public override float MonsterAttackNormal(float mobDamage)
+        {
+            Console.WriteLine($"{name} uses 500 needles!");
+            mobDamage *= 1.2f;
+            return mobDamage;
+        }
+        public override float MonsterAttackSpecial(float mobDamage)
+        {
+            Console.WriteLine($"{name} uses 1000 needles!");
+            mobDamage *= 2;
+            return mobDamage;
         }
     }
 }

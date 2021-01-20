@@ -61,7 +61,6 @@ namespace FantasyRpg.Shop
                 itemType = "weapon",
                 gold = 25,
                 weaponDamage = 25,
-                
                 str = 1,
             });
 

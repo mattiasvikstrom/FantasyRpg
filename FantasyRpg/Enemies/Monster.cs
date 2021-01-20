@@ -36,11 +36,42 @@ namespace FantasyRpg.Enemies
             int mobDamage = Game.RandomAttackDamage(minDamage, maxDamage);
             return mobDamage;
         }
-        public virtual bool Attack(Hero hero, List<Monster> mob, int b, bool defend)
+        public virtual float MonsterAttackList(float mobDamage)
+        {
+            Random ran = new Random();
+            var rand = ran.Next(1, 4);
+            if (rand <= 50)
+            {
+                mobDamage = MonsterAttackBasic(mobDamage);
+            }
+            else if (rand >= 51 && rand <= 80)
+            {
+                mobDamage = MonsterAttackNormal(mobDamage);
+            }
+            else
+            {
+                mobDamage = MonsterAttackSpecial(mobDamage);
+            }
+            return mobDamage;
+        }
+        public virtual float MonsterAttackBasic(float mobDamage)
+        {
+            return mobDamage;
+        }
+        public virtual float MonsterAttackNormal(float mobDamage)
+        {
+            return mobDamage;
+        }
+        public virtual float MonsterAttackSpecial(float mobDamage)
+        {
+            return mobDamage;
+        }
+        public virtual bool MonsterCombat(Hero hero, List<Monster> mob, int b, bool defend)
         {
             
             float mobDamage = MonsterDamage(mob, b);
-
+            mobDamage = MonsterAttackList(mobDamage);
+            Math.Round(mobDamage);
             mobDamage -= hero.def;
             //monsterdamage cant be lower than 0
             if (mobDamage < 0)
@@ -51,34 +82,22 @@ namespace FantasyRpg.Enemies
             {
                 float blockCap = 75;
                 float mobDamageHoldValue;
-                //player cannot exceed 75% block rate cap 
+                //player is not allowed to exceed 75% block rate cap 
                 if (hero.block > blockCap)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("**Over Blockcap**");
-                    Console.ResetColor();
-                    float blockValue = blockCap;
                     //save the mobs initial attack damage
                     mobDamageHoldValue = mobDamage;
                     //reduce mobs damage by the amount blocked by player , mobDamage: 20 would be 5 with 15 blocked damage
-                    Math.Round(mobDamage -= (mobDamage / 100) * blockValue);
-
+                    Math.Round(mobDamage -= (mobDamage / 100) * blockCap);
                     //get the actual value that was blocked by the hero for display purpose in battle logg
                     mobDamageHoldValue -= mobDamage;
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("**not exceeding Blockcap**");
-                    Console.ResetColor();
-                    //mob damage 20, block 75%
-                    //get % value of block
-                    float blockValue = hero.block;
                     //save the mobs initial attack damage
                     mobDamageHoldValue = mobDamage;
                     //reduce mobs damage by the amount blocked by player , mobDamage: 20 would be 5 with 15 blocked damage
-                    Math.Round(mobDamage -= (mobDamage / 100) * blockValue);
-
+                    Math.Round(mobDamage -= (mobDamage / 100) * hero.block);
                     //get the actual value that was blocked by the hero for display purpose in battle logg
                     mobDamageHoldValue -= mobDamage;
                     //deal the reduced damage to the player
@@ -114,7 +133,13 @@ namespace FantasyRpg.Enemies
             List<Monster> mob = new List<Monster>()
              {
                 new Rogue("Rogue"),
-                new Blob("Blob")
+                new Blob("Blob"),
+                new Tonberry("Tonberry"),
+                new Cactuar("Cactuar"),
+                new Kuja("Kuja"),
+                new Seymour("Seymour"),
+                new Sephiroth("Sephiroth"),
+                new Kefka("Kefka")
              };
 
             return mob;
