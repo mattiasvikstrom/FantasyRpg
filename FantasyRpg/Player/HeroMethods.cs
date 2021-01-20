@@ -19,7 +19,7 @@ namespace FantasyRpg.Player
             }
             heroDamage *= critical;
             heroDamage -= mob[b].def;
-            Math.Round(heroDamage);
+            Math.Round(heroDamage, 0);
             if (heroDamage < 0)
             {
                 heroDamage = 0;
@@ -40,7 +40,7 @@ namespace FantasyRpg.Player
             }
             heroDamage *= critical;
             heroDamage -= mob[b].def;
-            Math.Round(heroDamage);
+            Math.Round(heroDamage, 0);
             if (heroDamage < 0)
             {
                 heroDamage = 0;
@@ -61,7 +61,7 @@ namespace FantasyRpg.Player
             }
             heroDamage *= critical;
             heroDamage -= mob[b].def;
-            Math.Round(heroDamage);
+            Math.Round(heroDamage, 0);
             if (heroDamage < 0)
             {
                 heroDamage = 0;

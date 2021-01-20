@@ -46,14 +46,12 @@ namespace FantasyRpg.Shop
                 name = "Amulet of Shieldwall",
                 itemType = "Amulet",
                 gold = 400,
-                block = 5,
             });
             items.Add(new Merchant
             {
                 name = "Uber of this",
                 itemType = "potion",
                 gold = 400,
-                block = 5,
                 crit = 10,
                 str = 3,
                 def = 3,

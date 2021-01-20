@@ -57,7 +57,6 @@ namespace FantasyRpg.Player
             exp = 0; //uses
             gold = 2000; //uses
             maxExp = 150; //uses
-            block = 50; //uses ---- blocking only in effect when defending
 
             strModifier = 2; //modified to 4 when becomming a DeathKnight
             maxHpModifier = 2;//modified to 4 when becomming a DeathKnight
@@ -99,7 +98,6 @@ namespace FantasyRpg.Player
                    $"* Damage: {dmg}\n" +
                    $"* Hp: {hp} / {maxHp}\n" +
                    $"* Def: {def}\n" +
-                   $"* Block %: {block}\n" +
                    $"* Gold: {gold}\n" +
                    $"* Exp: {exp} / {maxExp}\n" +
                    $"* Str: {str}\n" +

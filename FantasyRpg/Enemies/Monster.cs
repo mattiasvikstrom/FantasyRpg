@@ -71,7 +71,7 @@ namespace FantasyRpg.Enemies
             
             float mobDamage = MonsterDamage(mob, b);
             mobDamage = MonsterAttackList(mobDamage);
-            Math.Round(mobDamage);
+            Math.Round(mobDamage, 0);
             mobDamage -= hero.def;
             //monsterdamage cant be lower than 0
             if (mobDamage < 0)

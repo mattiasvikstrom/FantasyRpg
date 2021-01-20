@@ -17,6 +17,7 @@ namespace FantasyRpg.Shop
                 itemType = "weapon",
                 gold = 500,
                 weaponDamage = 50,
+                attackPower = 50,
                 str = 5,
             });
             weapon.Add(new Merchant
@@ -25,6 +26,7 @@ namespace FantasyRpg.Shop
                 itemType = "weapon",
                 gold = 550,
                 weaponDamage = 60,
+                attackPower = 40,
                 str = 5,
                 crit = 10,
             });
@@ -34,6 +36,7 @@ namespace FantasyRpg.Shop
                 itemType = "weapon",
                 gold = 600,
                 weaponDamage = 71,
+                attackPower = 50,
                 crit = 10,
                 str = 7,
             });

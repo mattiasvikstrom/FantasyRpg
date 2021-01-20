@@ -23,10 +23,11 @@ namespace FantasyRpg.Shop
                               "* What do you want to buy?\n" +
                              $"* You have {hero.gold} gold.\n" +
                               "*******************************\n" +
-                             $"1. Items\n" +
-                             $"2. Armor\n" +
-                             $"3. Weapons\n" +
-                             $"******************************");
+                             $"[1]. Items\n" +
+                             $"[2]. Armor\n" +
+                             $"[3]. Weapons\n" +
+                             $"[Q]. Back\n" +
+                             $"*******************************");
             Console.Write(">>");
             Console.ForegroundColor = ConsoleColor.Cyan;
             string input = Console.ReadLine(); //Validation. ha menyn i loop och menyval för exit shop?
@@ -39,7 +40,6 @@ namespace FantasyRpg.Shop
                     break;
                 case "2":
                     ListItems(armor, hero);
-
                     ValidatePurchase(hero, armor, startArmor);
                     break;
                 case "3":
@@ -54,6 +54,9 @@ namespace FantasyRpg.Shop
         {
             string input;
             int intInput;
+            Console.WriteLine("Enter number of item to buy" +
+                              "[Q] to exit shop" +
+                              ">>" );
             input = Console.ReadLine();
 
             if (Int32.TryParse(input, out intInput) && intInput <= itemsx.Count && intInput > 0)
@@ -150,13 +153,18 @@ namespace FantasyRpg.Shop
         {
             //compares what the hero is currently wearing. Since the equipped item has a string we referens it below to locate the items position in the list
             //which allows us to remove its attributes from the hero when item is removed.
-
+            var test = intInput;
             //with the new addition of. startArmor ... this statement first checks for the itemtype in startArmor, if it matches it will switch list
             if (startArmor.Any(s => s.name.Contains(itemType)))
             {
                 itemsx = startArmor;
                 intInput = startArmor.FindIndex(item => item.name == itemType);
             }
+            else if (itemsx.Any(s => s.name.Contains(itemType)))
+            {
+                intInput = itemsx.FindIndex(item => item.name == itemType);
+            }
+            
 
             if (itemsx[intInput].def != 0)
             {
@@ -180,22 +188,19 @@ namespace FantasyRpg.Shop
                 Console.WriteLine($"Removed {itemsx[intInput].dmg} damage");
 
             }
-            if (itemsx[intInput].block != 0)
-            {
-                hero.block -= itemsx[intInput].block;
-                Console.WriteLine($"Removed {itemsx[intInput].block} block");
-
-            }
             if (itemsx[intInput].weaponDamage != 0)
             {
                 hero.weaponDamage -= itemsx[intInput].weaponDamage;
                 Console.WriteLine($"Removed {itemsx[intInput].weaponDamage} damage");
 
             }
-            else
+            if (itemsx[intInput].attackPower != 0)
             {
-                Console.WriteLine("no attributes were lost");
+                hero.attackPower -= itemsx[intInput].attackPower;
+                Console.WriteLine($"Removed {itemsx[intInput].attackPower} attackpower");
+
             }
+            
         }
 
         public static void AddAttributes(List<Merchant> items, Hero hero, int intInput)
@@ -221,6 +226,11 @@ namespace FantasyRpg.Shop
                 hero.weaponDamage = items[intInput - 1].weaponDamage;
                 Console.WriteLine($"added {items[intInput - 1].weaponDamage} weapon damage");
             }
+            if (items[intInput - 1].attackPower != 0)
+            {
+                hero.attackPower = items[intInput - 1].attackPower;
+                Console.WriteLine($"added {items[intInput - 1].attackPower} attackpower");
+            }
             if (items[intInput - 1].crit != 0)
             {
                 hero.crit += items[intInput - 1].crit;
@@ -230,16 +240,6 @@ namespace FantasyRpg.Shop
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("You have reached the cap for crit, any stat above cap will not aid");
                     Console.ResetColor();
-                }
-            }
-            if (items[intInput - 1].block != 0)
-            {
-                hero.block += items[intInput - 1].block;
-                Console.WriteLine($"added {items[intInput - 1].block} block");
-                if (hero.block >= 75)
-                {
-                    Console.ResetColor();
-                    Console.WriteLine("You have reached the cap for block, any stat above cap will not aid");
                 }
             }
             Console.ResetColor();
