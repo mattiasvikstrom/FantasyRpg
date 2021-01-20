@@ -19,7 +19,7 @@ namespace FantasyRpg.Enemies
             hp = 800;
             damage = 20;
             minDamage = 30;
-            maxDamage = 40;
+            maxDamage = 50;
             gold = 200;
             exp = 52;
         }

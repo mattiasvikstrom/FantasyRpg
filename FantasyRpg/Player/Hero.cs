@@ -81,7 +81,7 @@ namespace FantasyRpg.Player
         public float WeaponDamage { get { return weaponDamage; }set { weaponDamage = weaponDamage; } } //should be == equipped weapon
         public float MinDamage { get{ return minDamage; }set { minDamage = weaponDamage * attackPower / 32; } } //minimum damage to calculate random between min -> max.
         public float MaxDamage { get { return maxDamage; } set { maxDamage = weaponDamage * attackPower / 16; } }
-        public float AttackPower { get { return attackPower; } set { attackPower = attackPower + str; } } //kika genom värden för AP så det inte är för sjukt.
+        public float AttackPower { get { return attackPower; } set { attackPower = attackPower + str * 2; } } //kika genom värden för AP så det inte är för sjukt.
 
         public float Str { get { return str; } set { Math.Round(str += lvl * strModifier); } } // calculates hero strength
         public float MaxHp { get { return maxHp; } set { Math.Round(maxHp += vit * lvl * maxHpModifier); } } //calculates hero maximum health

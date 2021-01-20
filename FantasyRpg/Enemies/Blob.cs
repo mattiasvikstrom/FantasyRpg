@@ -16,8 +16,8 @@ namespace FantasyRpg.Enemies
             NameRare = "Crimson Blob";
             hp = 800;
             damage = 20;
-            minDamage = 15;
-            maxDamage = 30;
+            minDamage = 25;
+            maxDamage = 55;
             gold = 2200;
             exp = 60;
         }

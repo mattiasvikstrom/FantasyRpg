@@ -39,7 +39,7 @@ namespace FantasyRpg.Enemies
         public virtual float MonsterAttackList(float mobDamage)
         {
             Random ran = new Random();
-            var rand = ran.Next(1, 4);
+            var rand = ran.Next(1, 101);
             if (rand <= 50)
             {
                 mobDamage = MonsterAttackBasic(mobDamage);
@@ -66,7 +66,7 @@ namespace FantasyRpg.Enemies
         {
             return mobDamage;
         }
-        public virtual bool MonsterCombat(Hero hero, List<Monster> mob, int b, bool defend)
+        public virtual void MonsterCombat(Hero hero, List<Monster> mob, int b)
         {
             
             float mobDamage = MonsterDamage(mob, b);
@@ -78,46 +78,17 @@ namespace FantasyRpg.Enemies
             {
                 mobDamage = 0;
             }
-            if (defend == true)
-            {
-                float blockCap = 75;
-                float mobDamageHoldValue;
-                //player is not allowed to exceed 75% block rate cap 
-                if (hero.block > blockCap)
-                {
-                    //save the mobs initial attack damage
-                    mobDamageHoldValue = mobDamage;
-                    //reduce mobs damage by the amount blocked by player , mobDamage: 20 would be 5 with 15 blocked damage
-                    Math.Round(mobDamage -= (mobDamage / 100) * blockCap);
-                    //get the actual value that was blocked by the hero for display purpose in battle logg
-                    mobDamageHoldValue -= mobDamage;
-                }
-                else
-                {
-                    //save the mobs initial attack damage
-                    mobDamageHoldValue = mobDamage;
-                    //reduce mobs damage by the amount blocked by player , mobDamage: 20 would be 5 with 15 blocked damage
-                    Math.Round(mobDamage -= (mobDamage / 100) * hero.block);
-                    //get the actual value that was blocked by the hero for display purpose in battle logg
-                    mobDamageHoldValue -= mobDamage;
-                    //deal the reduced damage to the player
-                    hero.hp -= mobDamage;
-                }
-
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"{hero.name} blocked {mobDamageHoldValue}!");
-                Console.ResetColor();
-            }
+            
             else
             {
                 hero.hp -= mobDamage;
             }
-            //Hero defending is deactivated at this point
-            defend = false;
+            
+            
 
-            Console.WriteLine($"{mob[b].name} attacks for {mobDamage}");
+            Console.WriteLine($"{mob[b].name} does {mobDamage} damage");
             Console.WriteLine($"{hero.name} has hp: {hero.hp} left");
-            return defend;
+            
         }
 
         //Chance to face a specialist version of the opponent with increased stats
@@ -191,9 +162,6 @@ namespace FantasyRpg.Enemies
                     break;
                 };
             return mob;
-
-
-
         }
     }
 }

@@ -7,6 +7,86 @@ namespace FantasyRpg.Player
 {
     class HeroMethods
     {
+        public static float HeroAttackBasic(Hero hero, List<Monster> mob, float heroDamage, int b)
+        {
+            Console.WriteLine("basic attack");
+            var critical = CriticalChance(hero);
+            if (critical > 1)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Critical hit!");
+                Console.ResetColor();
+            }
+            heroDamage *= critical;
+            heroDamage -= mob[b].def;
+            Math.Round(heroDamage);
+            if (heroDamage < 0)
+            {
+                heroDamage = 0;
+            }
+            mob[b].hp -= heroDamage;
+            return heroDamage;
+        }
+        public static float HeroAttackNormal(Hero hero, List<Monster> mob, float heroDamage, int b)
+        {
+            Console.WriteLine("normal attack");
+            heroDamage *= 1.2f;
+            var critical = CriticalChance(hero);
+            if (critical > 1)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Critical hit!");
+                Console.ResetColor();
+            }
+            heroDamage *= critical;
+            heroDamage -= mob[b].def;
+            Math.Round(heroDamage);
+            if (heroDamage < 0)
+            {
+                heroDamage = 0;
+            }
+            mob[b].hp -= heroDamage;
+            return heroDamage;
+        }
+        public static float HeroAttackSpecial(Hero hero, List<Monster> mob, float heroDamage, int b)
+        {
+            Console.WriteLine("special attack");
+            heroDamage *= 2;
+            var critical = CriticalChance(hero);
+            if (critical > 1)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Critical hit!");
+                Console.ResetColor();
+            }
+            heroDamage *= critical;
+            heroDamage -= mob[b].def;
+            Math.Round(heroDamage);
+            if (heroDamage < 0)
+            {
+                heroDamage = 0;
+            }
+            mob[b].hp -= heroDamage;
+            return heroDamage;
+        }
+        public static float HeroAttackList(Hero hero, List<Monster> mob, float heroDamage, int b)
+        {
+            Random ran = new Random();
+            var rand = ran.Next(1, 101);
+            if (rand <= 50)
+            {
+                heroDamage = HeroAttackBasic(hero, mob, heroDamage, b);
+            }
+            else if (rand >= 51 && rand <= 80)
+            {
+                heroDamage = HeroAttackNormal(hero, mob, heroDamage, b);
+            }
+            else
+            {
+                heroDamage = HeroAttackSpecial(hero, mob, heroDamage, b);
+            }
+            return heroDamage;
+        }
         public static bool Battle(Hero hero)
         {
             Console.Clear();
@@ -18,21 +98,23 @@ namespace FantasyRpg.Player
             {
                 Console.WriteLine("You encountered an opponent!");
             }
-            
             else
             {
                 Console.WriteLine("No danger present.. this time.");
                 activeFight = false;
             }
+
             //generate monster for the battle
             List<Monster> mob = Monster.CreateMonster(hero);
             //variables something something
+
             var a = mob.Count;
-            int b = Convert.ToInt32(a - 1);
+            int b = Convert.ToInt32(a - 1); //kolla om detta behövs med nya random metoden.
+
             int i = 0;
             int roundCounter = 0;
             bool battleOutcome = false;
-            bool defend = false;
+            
             //turnbased fight. should player try to use potions? should combat be choicebased. attack, defend , heal, item?
             //Add paus between attacks or turnbased with choices for attack, defend och potion/heal
             int roundVerify = 0;
@@ -47,32 +129,35 @@ namespace FantasyRpg.Player
                     {
                         roundCounter++;
                     }
-                    Console.WriteLine($"BattleRound #{roundCounter}");
+                    Console.WriteLine($"BattleRound #{roundCounter}"); //kika varför det ibland ska tryckas 2 ggr på enter ...
+                    Continue(hero, mob, b);
+
                     if (i % 2 == 0)
                     {
-                        //HeroAttack(hero, mob, b);
                         //Method determens what attackmove hero should make randomly.
-                        defend = AttackMove(hero, mob, b, defend);
+                        float heroDamage = HeroDamage(hero);
+                        heroDamage = HeroAttackList(hero, mob, heroDamage, b);
+
+                        Console.WriteLine($"{hero.name} does {heroDamage} damage");
+                        Console.WriteLine($"{mob[b].name} has hp: {mob[b].hp} left");
+
                         roundVerify++;
                     }
                     else
                     {
-                        defend = mob[b].MonsterCombat(hero, mob, b, defend);
+                        mob[b].MonsterCombat(hero, mob, b);
                         roundVerify++;
                     }
-                    Continue(hero, mob, b);
+                    
                 }
                 else if (hero.hp <= 0)
                 {
                     Console.WriteLine("Game over!");
                     return battleOutcome = true;
-
                 }
                 else
                 {
-
                     //add experience and gold to player and if expmeter is >= full run the levelup method
-
                     activeFight = false;
                     hero.exp += mob[b].exp;
                     Game.TakeGold(hero, mob[b]);
@@ -179,83 +264,6 @@ namespace FantasyRpg.Player
             var heroDamage = heroDmg.Next(min, max);
 
             return heroDamage;
-        }
-        private static void HeroAttack(Hero hero, List<Monster> mob, int b)
-        {
-
-            //returns if the strike will be a critical strike
-            var crit = CriticalChance(hero);
-            float heroDamage = HeroDamage(hero);
-            heroDamage = heroDamage * crit; //crit is multiplied with the hero damage, only affects if crit value returned is > 1
-            if (crit > 1)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Critical hit!");
-                Console.ResetColor();
-            }
-            heroDamage -= mob[b].def; //returns damage after mob defense
-
-            //herodamage cant be lower than 0 , added for futuresafe against strong defense mobs.
-            if (heroDamage < 0)
-            {
-                heroDamage = 0;
-            }
-            mob[b].hp -= heroDamage;
-            Console.WriteLine($"{hero.name} attacks with Bloodstrike for {heroDamage}\n" +
-                              $"{mob[b].name} has hp: {mob[b].hp} left");
-        }
-        static void AttackSpecial(Hero hero, List<Monster> mob, int b)
-        {
-
-            //returns if the strike will be a critical strike
-            var crit = CriticalChance(hero);
-            float heroDamage = HeroDamage(hero);
-            heroDamage = heroDamage * crit;
-            if (crit > 1)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Critical hit!");
-                Console.ResetColor();
-            }
-            heroDamage *= 2;
-            heroDamage -= mob[b].def;
-            //herodamage cant be lower than 0
-            if (heroDamage < 0)
-            {
-                heroDamage = 0;
-            }
-
-            mob[b].hp -= heroDamage;
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{hero.name} uses Special attack for {heroDamage}!\n" +
-                              $"{mob[b].name} has hp: {mob[b].hp} left");
-            Console.ResetColor();
-        }
-        public static bool HeroDefend()
-        {
-            bool defend = true;
-            return defend;
-        }
-        static bool AttackMove(Hero hero, List<Monster> mob, int b, bool defend)
-        {
-            //randomize and validate value and execute action
-            //
-            Random ran = new Random();
-            var rand = ran.Next(1, 101);
-            if (rand <= 50)
-            {
-                HeroAttack(hero, mob, b);
-            }
-            else if (rand >= 51 && rand <= 80)
-            {
-                AttackSpecial(hero, mob, b);
-            }
-            else
-            {
-                defend = HeroDefend();
-            }
-
-            return defend;
         }
         static void Continue(Hero hero, List<Monster> mob, int b)
         {

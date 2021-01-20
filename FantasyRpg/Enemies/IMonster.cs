@@ -19,7 +19,7 @@ namespace FantasyRpg.Enemies
         int lvl { get; set; }
         int def { get; set; }
 
-        bool MonsterCombat(Hero hero,List<Monster> mob,int b, bool defend);
+        void MonsterCombat(Hero hero,List<Monster> mob,int b);
         public virtual int MonsterAttackBasic()
         {
             return damage;
