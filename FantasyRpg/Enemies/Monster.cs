@@ -12,7 +12,6 @@ namespace FantasyRpg.Enemies
         public string name { get; set; }
         public string NameRare { get; set; }
         public float hp { get; set; }
-        public int damage { get; set; }
         public int minDamage { get; set; }
         public int maxDamage { get; set; }
         public int gold { get; set; }
@@ -71,7 +70,8 @@ namespace FantasyRpg.Enemies
             
             float mobDamage = MonsterDamage(mob, b);
             mobDamage = MonsterAttackList(mobDamage);
-            Math.Round(mobDamage, 0);
+
+            mobDamage = (int)Math.Round(mobDamage);
             mobDamage -= hero.def;
             //monsterdamage cant be lower than 0
             if (mobDamage < 0)
@@ -87,7 +87,7 @@ namespace FantasyRpg.Enemies
             
 
             Console.WriteLine($"{mob[b].name} does {mobDamage} damage");
-            Console.WriteLine($"{hero.name} has hp: {hero.hp} left");
+            Console.WriteLine($"{hero.name} has hp: {hero.hp} left\n");
             
         }
 
@@ -107,25 +107,18 @@ namespace FantasyRpg.Enemies
             if (hero.lvl < 3)
             {
                 randomNumb = randomNum.Next(1, 3);
-                
-                
             }
             else if (hero.lvl < 5)
             {
                 randomNumb = randomNum.Next(3, 5);
-                
-                
             }
             else if (hero.lvl < 7)
             {
                 randomNumb = randomNum.Next(5, 7);
-                
-                
             }
             else
             {
                 randomNumb = randomNum.Next(7, 9);
-                
             }
 
             return randomNumb;
@@ -162,6 +155,14 @@ namespace FantasyRpg.Enemies
                     break;
                 };
             return mob;
+        }
+        public static void MonsterAdjustStats(List<Monster> mob, Hero hero, int b)
+        {
+            mob[b].gold = mob[b].gold * hero.lvl;
+            mob[b].hp = mob[b].hp * hero.lvl;
+            mob[b].minDamage *= hero.lvl / 2;
+            mob[b].maxDamage *= hero.lvl / 2;
+            mob[b].def *= hero.lvl / 2; 
         }
     }
 }

@@ -14,11 +14,10 @@ namespace FantasyRpg.Enemies
         {
             name = _name;
             NameRare = "Mad Cactuar";
-            hp = 200;
-            damage = 220;
+            hp = 1200;
             minDamage = 30;
-            maxDamage = 70;
-            gold = 2200;
+            maxDamage = 60;
+            gold = 320;
             exp = 150;
         }
         public override float MonsterAttackBasic(float mobDamage)

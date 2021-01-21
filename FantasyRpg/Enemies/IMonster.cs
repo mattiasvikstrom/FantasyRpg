@@ -9,7 +9,6 @@ namespace FantasyRpg.Enemies
     {
         string name { get; }
         float hp { get; set; }
-        int damage { get; set; }
         int minDamage { get; set; }
         int maxDamage { get; set; }
         int exp { get; set; }
@@ -22,15 +21,15 @@ namespace FantasyRpg.Enemies
         void MonsterCombat(Hero hero,List<Monster> mob,int b);
         public virtual int MonsterAttackBasic()
         {
-            return damage;
+            return minDamage;
         }
         public virtual int MonsterAttackNormal()
         {
-            return damage;
+            return minDamage;
         }
         public virtual int MonsterAttackSpecial()
         {
-            return damage;
+            return minDamage;
         }
         
         //int GiveGold();

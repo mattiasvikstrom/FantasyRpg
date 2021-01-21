@@ -14,11 +14,10 @@ namespace FantasyRpg.Enemies
         {
             name = _name;
             NameRare = "Golden Tonberry";
-            hp = 200;
-            damage = 220;
+            hp = 1000;
             minDamage = 20;
             maxDamage = 55;
-            gold = 2200;
+            gold = 300;
             exp = 150;
         }
         public override float MonsterAttackBasic(float mobDamage)

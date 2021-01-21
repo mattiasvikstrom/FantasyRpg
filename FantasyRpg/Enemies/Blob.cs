@@ -14,11 +14,10 @@ namespace FantasyRpg.Enemies
         {
             name = _name;
             NameRare = "Crimson Blob";
-            hp = 800;
-            damage = 20;
+            hp = 600;
             minDamage = 25;
             maxDamage = 55;
-            gold = 2200;
+            gold = 220;
             exp = 60;
         }
         public override float MonsterAttackBasic(float mobDamage)

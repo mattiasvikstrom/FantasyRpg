@@ -14,12 +14,11 @@ namespace FantasyRpg.Enemies
         {
             name = _name;
             NameRare = "Tranced Kuja";
-            hp = 200;
-            damage = 220;
+            hp = 1300;
             minDamage = 45;
             maxDamage = 70;
-            gold = 2200;
-            exp = 150;
+            gold = 590;
+            exp = 275;
         }
         public override float MonsterAttackBasic(float mobDamage)
         {
@@ -38,8 +37,5 @@ namespace FantasyRpg.Enemies
             mobDamage *= 3;
             return mobDamage;
         }
-        //Flare star
-        //Holy
-        //ultima
     }
 }

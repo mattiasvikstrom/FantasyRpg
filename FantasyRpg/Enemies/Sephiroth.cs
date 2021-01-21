@@ -14,12 +14,11 @@ namespace FantasyRpg.Enemies
         {
             name = _name;
             NameRare = "Safer Sephiroth";
-            hp = 200;
-            damage = 220;
+            hp = 1400;
             minDamage = 40;
             maxDamage = 90;
-            gold = 2200;
-            exp = 150;
+            gold = 700;
+            exp = 350;
         }
         public override float MonsterAttackBasic(float mobDamage)
         {

@@ -16,13 +16,12 @@ namespace FantasyRpg
         public static void Start()
         {
             Console.Title = "Fantasy RPG";
-            List<Merchant> startArmor = Armor.StarterArmor();
-            Hero hero = CreateHero(startArmor);
-
-            
+            List<Merchant> equipment = Armor.StarterArmor();
+            Hero hero = CreateHero(equipment);
             List<Merchant> weapon = Weapons.AddWeapon(); //om det blir problem är det säkert kring Weapons och vart listan är placerad.
             List<Merchant> armor = Armor.AddArmor();
             List<Merchant> items = Items.AddItems();
+            //List<Merchant> testList = Armor.TestClass();
 
             bool activeGame = false;
             do
@@ -51,7 +50,7 @@ namespace FantasyRpg
                         Inn.VisitInn(hero);
                         break;
                     case "4": //Enters shop, where all equipment is located, when purchased items are auto equipped.
-                        Merchant.ItemShop(hero, items, armor, weapon, startArmor);
+                        Merchant.ItemShop(hero, items, armor, weapon, equipment);
                         break;
                     case "5": // quits game
                         activeGame = true;
@@ -67,7 +66,7 @@ namespace FantasyRpg
             } while (!activeGame);
         }
 
-        public static Hero CreateHero(List<Merchant> startArmor)
+        public static Hero CreateHero(List<Merchant> equipment)
         {
             string heroName = Initialize();
             Hero hero = new Hero(heroName);
@@ -75,9 +74,9 @@ namespace FantasyRpg
             int ind = 1;
             Console.WriteLine($"\n Greeting {hero.name}, let's get you sorted with some items. It is a harsh world... \n");
             Thread.Sleep(2000);
-            foreach (var item in startArmor)
+            foreach (var item in equipment)
             {
-                Merchant.AddAttributes(startArmor, hero, ind);
+                Merchant.AddAttributes(equipment, hero, ind);
                 ind++;
             }
 
@@ -91,10 +90,11 @@ namespace FantasyRpg
             hero.AttackPower = hero.AttackPower;
             hero.MinDamage = hero.MinDamage;
             hero.MaxDamage = hero.MaxDamage;
-            
+            Console.Clear();
+            GodMode(hero, heroName);
             Console.WriteLine("There we are. you probably noticed getting a bit stronger there. Good luck!");
 
-
+            HeroMethods.Updating(hero);
             return hero;
         }
 
@@ -118,6 +118,19 @@ namespace FantasyRpg
         public static void TakeGold(Hero hero, Monster mob)
         {
             hero.gold += mob.gold;
+        }
+        public static void GodMode(Hero hero, string heroName)
+        {
+            if (heroName == "Robin" || heroName == "Isshin")
+            {
+                hero.str += 100;
+                hero.maxHp += 9999;
+                hero.hp = hero.maxHp;
+                hero.attackPower += 666;
+                hero.gold += 9999999;
+                hero.def += 100;
+
+            }
         }
     }
 }

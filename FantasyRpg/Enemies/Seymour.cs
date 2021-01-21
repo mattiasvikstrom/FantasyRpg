@@ -14,12 +14,11 @@ namespace FantasyRpg.Enemies
         {
             name = _name;
             NameRare = "Seymour Omnis";
-            hp = 200;
-            damage = 220;
+            hp = 1300;
             minDamage = 40;
             maxDamage = 85;
-            gold = 2200;
-            exp = 150;
+            gold = 600;
+            exp = 300;
         }
         public override float MonsterAttackBasic(float mobDamage)
         {

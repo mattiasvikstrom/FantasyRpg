@@ -14,12 +14,11 @@ namespace FantasyRpg.Enemies
         {
             name = _name;
             NameRare = "Kefka, God of magic";
-            hp = 8000;
-            damage = 220;
+            hp = 1500;
             minDamage = 40;
             maxDamage = 100;
-            gold = 2200;
-            exp = 150;
+            gold = 1000;
+            exp = 500;
         }
         public override float MonsterAttackBasic(float mobDamage)
         {

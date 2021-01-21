@@ -9,7 +9,7 @@ namespace FantasyRpg.Player
     {
         public static float HeroAttackBasic(Hero hero, List<Monster> mob, float heroDamage, int b)
         {
-            Console.WriteLine("basic attack");
+            Console.WriteLine($"{hero.name} attacks head on with {hero.weapon}");
             var critical = CriticalChance(hero);
             if (critical > 1)
             {
@@ -19,7 +19,7 @@ namespace FantasyRpg.Player
             }
             heroDamage *= critical;
             heroDamage -= mob[b].def;
-            Math.Round(heroDamage, 0);
+            heroDamage = (int)Math.Round(heroDamage, 0);
             if (heroDamage < 0)
             {
                 heroDamage = 0;
@@ -40,7 +40,7 @@ namespace FantasyRpg.Player
             }
             heroDamage *= critical;
             heroDamage -= mob[b].def;
-            Math.Round(heroDamage, 0);
+            heroDamage = (int)Math.Round(heroDamage, 0);
             if (heroDamage < 0)
             {
                 heroDamage = 0;
@@ -50,22 +50,38 @@ namespace FantasyRpg.Player
         }
         public static float HeroAttackSpecial(Hero hero, List<Monster> mob, float heroDamage, int b)
         {
-            Console.WriteLine("special attack");
+            
+            Console.WriteLine($"{hero.name} rushes {mob[b].name} with unseen ferocity!");
+            Console.WriteLine($"{hero.name} uses Blood Strike!");
             heroDamage *= 2;
             var critical = CriticalChance(hero);
+            Console.ForegroundColor = ConsoleColor.Green;
             if (critical > 1)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
+                
                 Console.WriteLine("Critical hit!");
-                Console.ResetColor();
+                
             }
             heroDamage *= critical;
             heroDamage -= mob[b].def;
-            Math.Round(heroDamage, 0);
+            
             if (heroDamage < 0)
             {
                 heroDamage = 0;
             }
+            var bloodStrike = heroDamage * 0.2f;
+            bloodStrike = (int)Math.Round(bloodStrike);
+            hero.hp += bloodStrike;
+            Console.WriteLine($"{hero.name} leeched {bloodStrike} health!");
+            if(hero.hp > hero.maxHp)
+            {
+                var overHeal = hero.hp - hero.maxHp;
+                Console.WriteLine($"Overhealed: {(int)Math.Round(overHeal)} health");
+                hero.hp = hero.maxHp;
+            }
+
+            Console.ResetColor();
+            heroDamage = (int)Math.Round(heroDamage);
             mob[b].hp -= heroDamage;
             return heroDamage;
         }
@@ -106,10 +122,14 @@ namespace FantasyRpg.Player
 
             //generate monster for the battle
             List<Monster> mob = Monster.CreateMonster(hero);
+            
             //variables something something
 
             var a = mob.Count;
             int b = Convert.ToInt32(a - 1); //kolla om detta behövs med nya random metoden.
+
+            //test om jag kan modifiera monster baserad på lvl
+            Monster.MonsterAdjustStats(mob, hero, b);
 
             int i = 0;
             int roundCounter = 0;
@@ -129,8 +149,9 @@ namespace FantasyRpg.Player
                     {
                         roundCounter++;
                     }
-                    Console.WriteLine($"BattleRound #{roundCounter}"); //kika varför det ibland ska tryckas 2 ggr på enter ...
                     Continue(hero, mob, b);
+                    Console.WriteLine($"BattleRound #{roundCounter}"); //kika varför det ibland ska tryckas 2 ggr på enter ...
+                    
 
                     if (i % 2 == 0)
                     {
@@ -139,7 +160,7 @@ namespace FantasyRpg.Player
                         heroDamage = HeroAttackList(hero, mob, heroDamage, b);
 
                         Console.WriteLine($"{hero.name} does {heroDamage} damage");
-                        Console.WriteLine($"{mob[b].name} has hp: {mob[b].hp} left");
+                        Console.WriteLine($"{mob[b].name} has hp: {mob[b].hp} left\n");
 
                         roundVerify++;
                     }
@@ -162,10 +183,14 @@ namespace FantasyRpg.Player
                     hero.exp += mob[b].exp;
                     Game.TakeGold(hero, mob[b]);
 
-                    Console.WriteLine($"Victory!\n" +
-                                      $"You gained {mob[b].exp} experience\n" +
-                                      $"{hero.exp} / {hero.maxExp}\n" +
-                                      $"You looted {mob[b].gold} gold");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"**************************************\n" +
+                                      $"*            Victory!\n" +
+                                      $"*    You gained {mob[b].exp} experience\n" +
+                                      $"*            {hero.exp} / {hero.maxExp}\n" +
+                                      $"*       You looted {mob[b].gold} gold\n" +
+                                      $"**************************************\n");
+                    Console.ResetColor();
                     if (hero.exp >= hero.maxExp)
                     {
                         LvlUp(hero);
@@ -210,7 +235,6 @@ namespace FantasyRpg.Player
                 hero.Str = hero.str; //recalculates str since str is leveldependant for its value
                 hero.MaxHp = hero.maxHp; //recalculates hero maxhp since it is leveldependent for its value
                 hero.MaxExp = hero.maxExp; //recalculates maxExp required for next levelup
-                //hero.Dmg = hero.dmg; //recalculates hero damage since it it str dependant
                 hero.hp = hero.maxHp; //heals player to full health after levelup
 
                 //gets the added value ontop of old stat value
@@ -276,6 +300,14 @@ namespace FantasyRpg.Player
 
                 }
             }
+        }
+        //updates hero damage when equipping weapons
+        public static void Updating(Hero hero)
+        {
+            hero.WeaponDamage = hero.weaponDamage;
+            hero.AttackPower = hero.attackPower;
+            hero.MinDamage = hero.minDamage;
+            hero.MaxDamage = hero.maxDamage;
         }
     }
 }

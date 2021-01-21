@@ -59,6 +59,7 @@ namespace FantasyRpg.Shop
             {
                 name = "Short sword",
                 itemType = "weapon",
+                itemId = 1011,
                 gold = 25,
                 weaponDamage = 25,
                 str = 1,

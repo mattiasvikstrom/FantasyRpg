@@ -16,12 +16,11 @@ namespace FantasyRpg.Enemies
         {
             name = _name;
             NameRare = "Rogue Specialist";
-            hp = 800;
-            damage = 20;
-            minDamage = 30;
-            maxDamage = 50;
+            hp = 600;
+            minDamage = 28;
+            maxDamage = 40;
             gold = 200;
-            exp = 52;
+            exp = 75;
         }
 
         public override float MonsterAttackBasic(float mobDamage)
@@ -32,7 +31,7 @@ namespace FantasyRpg.Enemies
         public override float MonsterAttackNormal(float mobDamage)
         {
             Console.WriteLine($"{name} throws an explosive bomb in your direction!");
-            mobDamage *= 1.2f; 
+            mobDamage *= 1.5f; 
             return mobDamage;
         }
         public override float MonsterAttackSpecial(float mobDamage)
@@ -60,7 +59,6 @@ namespace FantasyRpg.Enemies
         {
             return $"Heeeeloo {name}\n" +
                    $"HP {hp}\n" +
-                   $"DAMAGE {damage}\n" +
                    $"MIN {minDamage}\n" +
                    $"MAX {maxDamage}\n" +
                    $"GOLD {gold}\n" +
