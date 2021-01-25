@@ -96,9 +96,6 @@ namespace FantasyRpg.Enemies
         {
 
         }
-
-
-        public virtual int GiveGold() { return gold; }
         public static int CheckLevel(Hero hero)
         {
             int randomNumb = 0;

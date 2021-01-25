@@ -47,7 +47,6 @@ namespace FantasyRpg.Player
             name = heroName;
             className = "Warrior";
             lvl = 1; //uses
-            //dmg = 25; // Maybe not use damage. have weapondamage instead. maybe Avg damage... simplified min + max / 2. 150 + 200 / 2 = 175
             hp = 200; //uses
             maxHp = 200; //uses
             str = 28; //uses
@@ -83,9 +82,7 @@ namespace FantasyRpg.Player
         public float MinDamage { get{ return minDamage; }set { minDamage = weaponDamage * attackPower / 32; } } //minimum damage to calculate random between min -> max.
         public float MaxDamage { get { return maxDamage; } set { maxDamage = weaponDamage * attackPower / 24; } }
          //kika genom värden för AP så det inte är för sjukt.
-        
         public float MaxHp { get { return maxHp; } set { maxHp += vit * lvl * maxHpModifier; } } //calculates hero maximum health
-        //public float Dmg { get { return dmg; } set { dmg = dmg + str * 2; } } // calculates player damage
         public float MaxExp { get { return maxExp; } set { maxExp = maxExp + 150 / 2f; } } //calculates amount needed to level up 150 for first level up and 750 for last
         public float Def { get { return def; } set { def = value; } }
         public int Lvl { get { return lvl; } set { lvl = value; } } //test

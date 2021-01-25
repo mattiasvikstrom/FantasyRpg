@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using FantasyRpg.Player;
 
 namespace FantasyRpg.Shop
@@ -18,7 +17,6 @@ namespace FantasyRpg.Shop
         }
         public static void ItemShop(Hero hero, List<Merchant> items, List<Merchant> armor, List<Merchant> weapon, List<Merchant> equipment)
         {
-
             Console.Clear();
             Console.WriteLine("*******************************\n" +
                               "* Welcome to the item shop!\n" +
@@ -56,35 +54,38 @@ namespace FantasyRpg.Shop
         {
             string input;
             int intInput;
-            Console.WriteLine("Enter number of item to buy" +
-                              "[Q] to exit shop" +
+            Console.WriteLine("Enter number of item to buy, " +
+                              " and press [Q] to exit shop\n" +
                               ">>" );
             input = Console.ReadLine();
-
-            if (Int32.TryParse(input, out intInput) && intInput <= itemsx.Count && intInput > 0)
+            do
             {
-                if (hero.gold >= itemsx[intInput - 1].gold)
+                if (Int32.TryParse(input, out intInput) && intInput <= itemsx.Count && intInput > 0)
                 {
-                    Merchant.BuyItem(itemsx, equipment, hero, intInput);
-                    hero.gold -= itemsx[intInput - 1].gold;
+                    if (hero.gold >= itemsx[intInput - 1].gold)
+                    {
+                        BuyItem(itemsx, equipment, hero, intInput);
+                        hero.gold -= itemsx[intInput - 1].gold;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You do not have enough gold to purchase this");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("You do not have enough gold to purchase this");
+                    Console.WriteLine("You did not select a valid choice");
                 }
-            }
+                
+            } while (Console.ReadKey().Key != ConsoleKey.Q);
+            
             return input;
         }
         public static void BuyItem(List<Merchant> itemsx, List<Merchant> equipment, Hero hero, int intInput)
         {
             //which item to equip
             var itemType = itemsx[intInput - 1].itemType;
-            var removeItem = 0; //TEST VARIABLE
-
-            //List<Merchant> testList = new List<Merchant>();
-            //vilken item är equipped innan jag tar på mig den nya........
-            //var itemId = itemsx[intInput - 1].itemId;
-            //int index = items.FindIndex(a => a.itemId == itemId);
+             //TEST VARIABLE
 
             //All "equippment slots" so that they can be tracked. This definition is also carried on to compare which item is currently in that itemslot
             //because we need to remove it and its added attributes to our hero. Only applied to equipment rather than items(permanent buffs) in the shop
@@ -93,104 +94,32 @@ namespace FantasyRpg.Shop
             switch (itemType)
             {
                 case "helmet":
-                    if (equipment.Any(s => s.itemType.Contains("helmet"))) //verkar fungera
-                    {
-                        removeItem = equipment.FindIndex(item => item.itemType == "helmet");
-                        Console.WriteLine("testar ta bort item.....");
-                        RemoveAttributes(equipment, hero, removeItem, itemType);
-                    }
-                    equipment.Add(itemsx[intInput - 1]); //test...
-                    itemType = hero.helmet;
-
-                    Console.WriteLine($"Unequipped {hero.helmet}");
+                    ItemEquip(itemsx, equipment, hero, intInput, itemType);
                     hero.helmet = itemsx[intInput - 1].name;
-                    Console.WriteLine($"You equipped {itemsx[intInput - 1].name}");
                     break;
-                //case "helmet":
-                //    testList.Add(itemsx[intInput - 1]); //test...
-                //    itemType = hero.helmet;
-                //    RemoveAttributes(itemsx, startArmor, hero, intInput, itemType);
-                //    hero.helmet = itemsx[intInput - 1].name;
-                //    Console.WriteLine($"You equipped {itemsx[intInput - 1].name}");
-                //    break;
                 case "shoulder":
-                    if (equipment.Any(s => s.itemType.Contains("shoulder"))) //verkar fungera
-                    {
-                        removeItem = equipment.FindIndex(item => item.itemType == "shoulder");
-                        Console.WriteLine("testar ta bort item.....");
-                        RemoveAttributes(equipment, hero, removeItem, itemType);
-                    }
-                    itemType = hero.shoulder;
-                    
-                    Console.WriteLine($"Unequipped {hero.shoulder}");
+                    ItemEquip(itemsx, equipment, hero, intInput, itemType);
                     hero.shoulder = itemsx[intInput - 1].name;
-                    equipment.Add(itemsx[intInput - 1]);
-                    Console.WriteLine($"You equipped {itemsx[intInput - 1].name}");
                     break;
                 case "chestplate":
-                    if (equipment.Any(s => s.itemType.Contains("chestplate"))) //verkar fungera
-                    {
-                        removeItem = equipment.FindIndex(item => item.itemType == "chestplate");
-                        Console.WriteLine("testar ta bort item.....");
-                        RemoveAttributes(equipment, hero, removeItem, itemType);
-                    }
-                    itemType = hero.chestArmor;
-                    Console.WriteLine($"Unequipped {hero.chestArmor}");
+                    ItemEquip(itemsx, equipment, hero, intInput, itemType);
                     hero.chestArmor = itemsx[intInput - 1].name;
-                    equipment.Add(itemsx[intInput - 1]);
-                    Console.WriteLine($"You equipped {itemsx[intInput - 1].name}");
                     break;
                 case "gloves":
-                    if (equipment.Any(s => s.itemType.Contains("gloves"))) //verkar fungera
-                    {
-                        removeItem = equipment.FindIndex(item => item.itemType == "gloves");
-                        Console.WriteLine("testar ta bort item.....");
-                        RemoveAttributes(equipment, hero, removeItem, itemType);
-                    }
-                    itemType = hero.gloves;
-                    Console.WriteLine($"Unequipped {hero.gloves}");
+                    ItemEquip(itemsx, equipment, hero, intInput, itemType);
                     hero.gloves = itemsx[intInput - 1].name;
-                    equipment.Add(itemsx[intInput - 1]);
-                    Console.WriteLine($"You equipped {itemsx[intInput - 1].name}");
                     break;
                 case "legs":
-                    if (equipment.Any(s => s.itemType.Contains("legs"))) //verkar fungera
-                    {
-                        removeItem = equipment.FindIndex(item => item.itemType == "legs");
-                        Console.WriteLine("testar ta bort item.....");
-                        RemoveAttributes(equipment, hero, removeItem, itemType);
-                    }
-                    itemType = hero.legs;
-                    Console.WriteLine($"Unequipped {hero.legs}");
+                    ItemEquip(itemsx, equipment, hero, intInput, itemType);
                     hero.legs = itemsx[intInput - 1].name;
-                    equipment.Add(itemsx[intInput - 1]);
-                    Console.WriteLine($"You equipped {itemsx[intInput - 1].name}");
                     break;
                 case "boots":
-                    if (equipment.Any(s => s.itemType.Contains("boots"))) //verkar fungera
-                    {
-                        removeItem = equipment.FindIndex(item => item.itemType == "boots");
-                        Console.WriteLine("testar ta bort item.....");
-                        RemoveAttributes(equipment, hero, removeItem, itemType);
-                    }
-                    itemType = hero.boots;
-                    Console.WriteLine($"Unequipped {hero.boots}");
-                    //hero.boots = itemsx[intInput - 1].name;
-                    equipment.Add(itemsx[intInput - 1]);
-                    Console.WriteLine($"You equipped {itemsx[intInput - 1].name}");
+                    ItemEquip(itemsx, equipment, hero, intInput, itemType);
+                    hero.boots = itemsx[intInput - 1].name;
                     break;
                 case "weapon":
-                    if (equipment.Any(s => s.itemType.Contains("weapon"))) //verkar fungera
-                    {
-                        removeItem = equipment.FindIndex(item => item.itemType == "weapon");
-                        Console.WriteLine("testar ta bort item.....");
-                        RemoveAttributes(equipment, hero, removeItem, itemType);
-                    }
-                    itemType = hero.weapon;
-                    Console.WriteLine($"Unequipped {hero.weapon}");
+                    ItemEquip(itemsx, equipment, hero, intInput, itemType);
                     hero.weapon = itemsx[intInput - 1].name;
-                    equipment.Add(itemsx[intInput - 1]);
-                    Console.WriteLine($"You equipped {itemsx[intInput - 1].name}");
                     break;
             }
             Console.ResetColor();
@@ -206,25 +135,29 @@ namespace FantasyRpg.Shop
             AddAttributes(itemsx, hero, intInput);
             HeroMethods.Updating(hero);
         }
+
+        private static int ItemEquip(List<Merchant> itemsx, List<Merchant> equipment, Hero hero, int intInput, string itemType)
+        {
+            var removeItem = 0;
+            if (equipment.Any(s => s.itemType.Contains(itemType))) //verkar fungera, se om det kan bli metod för alla möjligheter..
+            {
+                removeItem = equipment.FindIndex(item => item.itemType == itemType);
+                Console.WriteLine($"Unequipped {equipment[removeItem].name}");
+                RemoveAttributes(equipment, hero, removeItem, itemType);
+                equipment.RemoveAt(removeItem);
+            }
+            equipment.Add(itemsx[intInput - 1]);
+
+            Console.WriteLine($"You equipped {itemsx[intInput - 1].name}");
+            return removeItem;
+        }
+
         private static void RemoveAttributes(List<Merchant> equipment, Hero hero, int intInput, string itemType)
         {
             //compares what the hero is currently wearing. Since the equipped item has a string we referens it below to locate the items position in the list
             //which allows us to remove its attributes from the hero when item is removed.
-            var test = intInput;
-            //with the new addition of. startArmor ... this statement first checks for the itemtype in startArmor, if it matches it will switch list
+            //var test = intInput;
             
-            //TEMPORÄRT UTKOMMENTERAT------------------------------------------------------------------------
-            //if (startArmor.Any(s => s.name.Contains(itemType)))
-            //{
-            //    itemsx = startArmor;
-            //    intInput = startArmor.FindIndex(item => item.name == itemType);
-            //}
-            //else if (itemsx.Any(s => s.name.Contains(itemType)))
-            //{
-            //    intInput = itemsx.FindIndex(item => item.name == itemType);
-            //}
-            
-
             if (equipment[intInput].def != 0)
             {
                 hero.def -= equipment[intInput].def;
@@ -239,27 +172,22 @@ namespace FantasyRpg.Shop
             {
                 hero.crit -= equipment[intInput].crit;
                 Console.WriteLine($"Removed {equipment[intInput].crit} crit");
-
             }
             if (equipment[intInput].dmg != 0)
             {
                 hero.dmg -= equipment[intInput].dmg;
                 Console.WriteLine($"Removed {equipment[intInput].dmg} damage");
-
             }
             if (equipment[intInput].weaponDamage != 0)
             {
                 hero.weaponDamage -= equipment[intInput].weaponDamage;
                 Console.WriteLine($"Removed {equipment[intInput].weaponDamage} damage");
-
             }
             if (equipment[intInput].attackPower != 0)
             {
                 hero.attackPower -= equipment[intInput].attackPower;
                 Console.WriteLine($"Removed {equipment[intInput].attackPower} attackpower");
-
             }
-            
         }
 
         public static void AddAttributes(List<Merchant> items, Hero hero, int intInput)
@@ -305,37 +233,17 @@ namespace FantasyRpg.Shop
         }
         public static void ListItems(List<Merchant> items, List<Merchant> equipment, Hero hero)
         {
-            //hero equipped items reference for comparision
-            string helm = hero.helmet;
-            string shoulder = hero.shoulder;
-            string chest = hero.chestArmor;
-            string gloves = hero.gloves;
-            string legs = hero.legs;
-            string boots = hero.boots;
-            string weapon = hero.weapon;
-            /*
-            Om jag skapar en lista för all equipment hero har.  
-            */
-            /*om jag tar in startArmor listan och kan ta fram attributen för dom
-            LIST first item
-            OM itemtype stämmer med equipped item, kanske måste vara i uppdaterad lista
-            SÅ jämför attribut mot item som listas
-            SÅ ta Listad -= equipped
-            GÖR cw(+attribut) OM positivt
-            ANNARS cw(-attribut) OM negativt
-            */
             int i = 1;
             int j = 0;
-            Console.Write("Color explaning: ");
+            Console.Write("Color explanation: ");
             Console.ForegroundColor = ConsoleColor.Green; Console.Write($"[IMPROVEMENT] "); Console.ResetColor();
-            Console.ForegroundColor = ConsoleColor.Yellow; Console.Write($" [NO CHANGE] "); Console.ResetColor();
-            Console.ForegroundColor = ConsoleColor.Red; Console.Write($" [DOWNGRADE] \n"); Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Yellow; Console.Write($"[NO CHANGE] "); Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Red; Console.Write($"[DOWNGRADE] \n"); Console.ResetColor();
             foreach (var item in items)
             {
-                
                 Console.Write($"{i++}. || {items[j].itemType} || {items[j].name} Cost: {items[j].gold} gold");
                 //if item in list is on the player, its noted as equipped after its listing
-                if (items[j].name == helm || items[j].name == shoulder || items[j].name == chest || items[j].name == gloves || items[j].name == legs || items[j].name == boots || items[j].name == weapon)
+                if (items[j].name == hero.helmet || items[j].name == hero.shoulder || items[j].name == hero.chestArmor || items[j].name == hero.gloves || items[j].name == hero.legs || items[j].name == hero.boots || items[j].name == hero.weapon)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write(" - Equipped");
@@ -345,7 +253,6 @@ namespace FantasyRpg.Shop
                 int itermId = 0;
                 if (equipment.Any(s => s.itemType.Equals(items[j].itemType)))
                 {
-                    
                     foreach (var itemId in equipment)
                     {
                         if (itemId.itemType == items[j].itemType)
@@ -353,127 +260,78 @@ namespace FantasyRpg.Shop
                             itermId = itemId.itemId;
                         }
                     }
+                    //Compares to get the correct item and its values to below display which change the player will get with each item.
                     Console.Write("\nChange if bought: ");
                     var myItem = equipment.FindIndex(equip => equip.itemId == itermId);
                     if (equipment[myItem].weaponDamage != 0 || items[j].weaponDamage != 0)
                     {
-                        var wepdamage = items[j].weaponDamage - equipment[myItem].weaponDamage;
-                        if (wepdamage < 0)
-                        {
-                            Console.Write($"Weapon damage: ");
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write(wepdamage);
-                            Console.ResetColor();
-                        }
-                        else if(wepdamage > 0)
-                        {
-                            Console.Write($"Weapon damage: ");
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(wepdamage);
-                            Console.ResetColor();
-                        }
-                        else
-                        {
-                            Console.Write($"Weapon damage: ");
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.Write(wepdamage);
-                            Console.ResetColor();
-                        }
+                        var stat = items[j].weaponDamage - equipment[myItem].weaponDamage;
+                        Console.Write($" Weapon damage: ");
+                        stat = ColorOfGain(Convert.ToInt32(stat));
+                        Console.Write($"{stat}");
+                        Console.ResetColor();
                     }
                     if (equipment[myItem].attackPower != 0 || items[j].attackPower != 0)
                     {
-                        var attpower = items[j].attackPower - equipment[myItem].attackPower;
-                        if (attpower < 0)
-                        {
-                            Console.Write($"Weapon damage: ");
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write(attpower);
-                            Console.ResetColor();
-                        }
-                        else if(attpower > 0)
-                        {
-                            Console.Write($"Attackpower: ");
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(attpower);
-                            Console.ResetColor();
-                        }
-                        else
-                        {
-                            Console.Write($"Attackpower: ");
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.Write(attpower);
-                            Console.ResetColor();
-                        }
-                        
+                        var stat = items[j].attackPower - equipment[myItem].attackPower;
+                        Console.Write($" Attackpower: ");
+                        stat = ColorOfGain(Convert.ToInt32(stat));
+                        Console.Write($"{stat}");
+                        Console.ResetColor();
                     }
                     if (equipment[myItem].str != 0 || items[j].str != 0)
                     {
-                        var strength = items[j].str - equipment[myItem].str;
-                        if (strength < 0)
-                        {
-                            Console.Write($"Strength: ");
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write(strength);
-                            Console.ResetColor();
-                        }
-                        else if(strength > 0)
-                        {
-                            Console.Write($"Strength: ");
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(strength);
-                            Console.ResetColor();
-                        }
-                        else
-                        {
-                            Console.Write($"Strength: ");
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.Write(strength);
-                            Console.ResetColor();
-                        }
-                        
+                        var stat = items[j].str - equipment[myItem].str;
+                        Console.Write($" Strength: ");
+                        stat = ColorOfGain(Convert.ToInt32(stat));
+                        Console.Write($"{stat}");
+                        Console.ResetColor();
+                    }
+                    if (equipment[myItem].def != 0 || items[j].def != 0)
+                    {
+                        var stat = items[j].def - equipment[myItem].def;
+                        Console.Write($" Defense: ");
+                        stat = ColorOfGain(Convert.ToInt32(stat));
+                        Console.Write($"{stat}");
+                        Console.ResetColor();
+                    }
+                    if (equipment[myItem].maxHp != 0 || items[j].maxHp != 0)
+                    {
+                        var stat = items[j].maxHp - equipment[myItem].maxHp;
+                        Console.Write($" Max Health: ");
+                        stat = ColorOfGain(Convert.ToInt32(stat));
+                        Console.Write($"{stat}");
+                        Console.ResetColor();
                     }
                     if (equipment[myItem].crit != 0 || items[j].crit != 0)
                     {
-                        var critical = items[j].crit - equipment[myItem].crit;
-                        if (critical < 0)
-                        {
-                            Console.Write($"Critical: ");
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write(critical);
-                            Console.ResetColor();
-                        }
-                        else if(critical > 0)
-                        {
-                            Console.Write($"Critical: ");
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(critical);
-                            Console.ResetColor();
-                        }
-                        else
-                        {
-                            Console.Write($"Critical: \n");
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.Write(critical);
-                            Console.ResetColor();
-                        }
+                        var stat = items[j].crit - equipment[myItem].crit;
+                        Console.Write($" Critical: ");
+                        stat = ColorOfGain(Convert.ToInt32(stat));
+                        Console.Write($"{stat}");
+                        Console.ResetColor();
                     }
                 }
-                Console.WriteLine();
+                Console.WriteLine("\n");
                 j++;
             }
         }
-        public static void CompareItemsTest()
+        //Depending on value the color of the text will change for the attribute.
+        private static int ColorOfGain(int stat)
         {
-            //get values from equipped items
-            //get values from possible items
-            //compare equippable items
-            //display possible gain value from the items in the shop
-            /*
-            Itemtype: Weapon, Name: Buster Sword - Equipped 
-            [Weapon damage: +18, Strength: +5, Attackpower: 38]
-             */
-
-
+            if (stat < 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+            }
+            else if (stat > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+            }
+            return stat;
         }
     }
 }

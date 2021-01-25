@@ -16,30 +16,30 @@ namespace FantasyRpg.Shop
             {
                 name = "Redbull of Defense",
                 itemType = "Potion/buff",
-                gold = 250,
-                def = 3,
+                gold = 500,
+                def = 5,
             });
             items.Add(new Merchant
             {
                 name = "Redbull of Strength",
                 itemType = "Potion/buff",
-                gold = 275,
+                gold = 500,
                 str = 5,
             });
             items.Add(new Merchant
             {
                 name = "Amulet of Critical",
                 itemType = "Amulet",
-                gold = 300,
+                gold = 500,
                 crit = 5,
             });
             items.Add(new Merchant
             {
                 name = "Amulet of Masterness",
                 itemType = "Amulet",
-                gold = 400,
-                crit = 5,
-                str = 5,
+                gold = 800,
+                crit = 4,
+                str = 4,
             });
             items.Add(new Merchant
             {

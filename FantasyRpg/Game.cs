@@ -17,10 +17,11 @@ namespace FantasyRpg
         {
             Console.Title = "Fantasy RPG";
             List<Merchant> equipment = Armor.StarterArmor();
-            Hero hero = CreateHero(equipment);
             List<Merchant> weapon = Weapons.AddWeapon(); //om det blir problem är det säkert kring Weapons och vart listan är placerad.
             List<Merchant> armor = Armor.AddArmor();
             List<Merchant> items = Items.AddItems();
+            List<Merchant> food = Inn.AddFood();
+            Hero hero = CreateHero(equipment, armor);
             //List<Merchant> testList = Armor.TestClass();
 
             bool activeGame = false;
@@ -47,7 +48,7 @@ namespace FantasyRpg
                         Console.WriteLine(hero);
                         break;
                     case "3": //Allows hero to rest at in in exchange for gold, this heals the player to full health
-                        Inn.VisitInn(hero);
+                        Inn.VisitInn(hero, food);
                         break;
                     case "4": //Enters shop, where all equipment is located, when purchased items are auto equipped.
                         Merchant.ItemShop(hero, items, armor, weapon, equipment);
@@ -65,8 +66,7 @@ namespace FantasyRpg
                 }
             } while (!activeGame);
         }
-
-        public static Hero CreateHero(List<Merchant> equipment)
+        public static Hero CreateHero(List<Merchant> equipment, List<Merchant> armor)
         {
             string heroName = Initialize();
             Hero hero = new Hero(heroName);
@@ -91,13 +91,12 @@ namespace FantasyRpg
             hero.MinDamage = hero.MinDamage;
             hero.MaxDamage = hero.MaxDamage;
             Console.Clear();
-            GodMode(hero, heroName);
+            GodMode(hero, armor, heroName);
             Console.WriteLine("There we are. you probably noticed getting a bit stronger there. Good luck!");
 
             HeroMethods.Updating(hero);
             return hero;
         }
-
         public static string Initialize()
         {
             Console.WriteLine("Welcome to Fantasy RPG!\n" +
@@ -119,7 +118,7 @@ namespace FantasyRpg
         {
             hero.gold += mob.gold;
         }
-        public static void GodMode(Hero hero, string heroName)
+        public static void GodMode(Hero hero, List<Merchant> armor, string heroName)
         {
             if (heroName == "Robin" || heroName == "Isshin")
             {
@@ -130,6 +129,15 @@ namespace FantasyRpg
                 hero.gold += 9999999;
                 hero.def += 100;
 
+                armor.Add(new Merchant
+                {
+                    name = "Godly chestplate",
+                    itemType = "chestplate",
+                    gold = 2500,
+                    def = 2500,
+                    str = 2000,
+                    maxHp = 8000,
+                });
             }
         }
     }

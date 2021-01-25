@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using FantasyRpg.Enemies;
 
 namespace FantasyRpg.Player
 {
     class HeroMethods
     {
+        
+        
         public static float HeroAttackBasic(Hero hero, List<Monster> mob, float heroDamage, int b)
         {
             Console.WriteLine($"{hero.name} attacks head on with {hero.weapon}");
@@ -52,7 +53,7 @@ namespace FantasyRpg.Player
         {
             
             Console.WriteLine($"{hero.name} rushes {mob[b].name} with unseen ferocity!");
-            Console.WriteLine($"{hero.name} uses Blood Strike!");
+            Console.WriteLine($"{hero.name} uses [Blood Strike]!");
             heroDamage *= 2;
             var critical = CriticalChance(hero);
             Console.ForegroundColor = ConsoleColor.Green;
@@ -85,6 +86,7 @@ namespace FantasyRpg.Player
             mob[b].hp -= heroDamage;
             return heroDamage;
         }
+        //Evaluates by random which attack the hero will perform. They have different chance and does different damage multiplier
         public static float HeroAttackList(Hero hero, List<Monster> mob, float heroDamage, int b)
         {
             Random ran = new Random();
@@ -103,34 +105,23 @@ namespace FantasyRpg.Player
             }
             return heroDamage;
         }
+        //controls the fight between hero and oponent
         public static bool Battle(Hero hero)
         {
             Console.Clear();
             bool activeFight = true;
             //Checks for possible fight
-            var battleChance = BattleChance();
-            
-            if (battleChance >= 11)
-            {
-                Console.WriteLine("You encountered an opponent!");
-            }
-            else
-            {
-                Console.WriteLine("No danger present.. this time.");
-                activeFight = false;
-            }
+            activeFight = BattleChance();
 
             //generate monster for the battle
             List<Monster> mob = Monster.CreateMonster(hero);
             
             //variables something something
-
             var a = mob.Count;
-            int b = Convert.ToInt32(a - 1); //kolla om detta behövs med nya random metoden.
+            int b = Convert.ToInt32(a - 1);
 
             //test om jag kan modifiera monster baserad på lvl
             Monster.MonsterAdjustStats(mob, hero, b);
-
             int i = 0;
             int roundCounter = 0;
             bool battleOutcome = false;
@@ -141,27 +132,23 @@ namespace FantasyRpg.Player
 
             while (activeFight)
             {
-
                 if (hero.hp >= 1 && mob[b].hp >= 1)
                 {
-                    //Verify which round is active. One round needs both fighters to attack once. when both have, go to next round counter
+                    //Verify which round is active. One round needs both fighters to attack once. when both have attacked once, go to next round counter
                     if (roundVerify % 2 == 0)
                     {
                         roundCounter++;
                     }
                     Continue(hero, mob, b);
-                    Console.WriteLine($"BattleRound #{roundCounter}"); //kika varför det ibland ska tryckas 2 ggr på enter ...
+                    Console.WriteLine($"BattleRound #{roundCounter}");
                     
-
                     if (i % 2 == 0)
                     {
                         //Method determens what attackmove hero should make randomly.
                         float heroDamage = HeroDamage(hero);
                         heroDamage = HeroAttackList(hero, mob, heroDamage, b);
-
                         Console.WriteLine($"{hero.name} does {heroDamage} damage");
                         Console.WriteLine($"{mob[b].name} has hp: {mob[b].hp} left\n");
-
                         roundVerify++;
                     }
                     else
@@ -200,6 +187,7 @@ namespace FantasyRpg.Player
             }
             return battleOutcome;
         }
+        //if criteria is met hero class will be changed, and stat multipliers will be upped x2
         public static void ClassChange(Hero hero)
         {
             //Since the possibility could exist for the player to choose their first class additional class evolutions could be added
@@ -226,7 +214,7 @@ namespace FantasyRpg.Player
             //notes stats before levelup to retrieve the gained amount
             var currStr = hero.str;
             var currMaxHp = hero.maxHp;
-            var currDmg = hero.dmg;
+            
 
             if (hero.exp >= hero.maxExp)
             {
@@ -249,7 +237,6 @@ namespace FantasyRpg.Player
                                   $"You are now at full health\n" +
                                   $"You gained\n" +
                                   $"Str + {currStr}\n" +
-                                  $"Damage + {currDmg}\n" +
                                   $"Maxhp + {currMaxHp}\n");
                 Console.ResetColor();
 
@@ -271,12 +258,23 @@ namespace FantasyRpg.Player
             }
             return critChance;
         }
-        public static int BattleChance()
+        public static bool BattleChance()
         {
+            bool activeFight = true;
             Random battleChance = new Random();
             var battle = battleChance.Next(1, 101);
             Console.WriteLine($"******ChanceNumber: {battle} ********"); //remove later
-            return battle;
+
+            if (battle >= 11)
+            {
+                Console.WriteLine("You encountered an opponent!");
+            }
+            else
+            {
+                Console.WriteLine("No danger present.. this time.");
+                activeFight = false;
+            }
+            return activeFight;
         }
         public static int HeroDamage(Hero hero)
         {

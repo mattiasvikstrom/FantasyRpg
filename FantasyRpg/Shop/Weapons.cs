@@ -26,7 +26,6 @@ namespace FantasyRpg.Shop
                 attackPower = 38,
                 crit = 4,
                 str = 5,
-                //description = $"Weapondmg {weaponDamage}",
 
             });
             weapon.Add(new Merchant

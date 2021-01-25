@@ -40,13 +40,7 @@ namespace FantasyRpg.Enemies
             mobDamage *= 2;
             return mobDamage;
         }
-        //maybe void.... or find neat way to hand over gold to hero.
-        public override int GiveGold()
-        {
-
-            return gold;
-        }
-        //Chance to face a power powerful monster.
+        //Chance to face a power powerful monster. not fully implemented
         public override void Specialist()
         {
             name = NameRare;
