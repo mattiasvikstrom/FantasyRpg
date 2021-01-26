@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FantasyRpg.Player;
+﻿using System.Collections.Generic;
+
 
 namespace FantasyRpg.Shop
 {
     class Armor : Merchant
     {
+        //List that contains what the hero initially is wearing
         public static List<Merchant> StarterArmor()
         {
             List<Merchant> equipment = new List<Merchant>();
@@ -68,6 +67,7 @@ namespace FantasyRpg.Shop
 
             return equipment;
         }
+        //List with the Hero armor that can be purchaced in the shop
         public static List<Merchant> AddArmor()
         {
             List<Merchant> armor = new List<Merchant>();
@@ -98,6 +98,7 @@ namespace FantasyRpg.Shop
                 gold = 2500,
                 def = 15,
                 str = 10,
+                vit = 10,
                 crit = 10,
 
             });
@@ -126,6 +127,7 @@ namespace FantasyRpg.Shop
                 gold = 2500,
                 str = 25,
                 def = 25,
+                vit = 15,
                 maxHp = 100,
             });
 
@@ -136,6 +138,7 @@ namespace FantasyRpg.Shop
                 gold = 250,
                 def = 10,
                 crit = 5,
+                vit = 5,
                 maxHp = 50,
             });
             armor.Add(new Merchant
@@ -144,6 +147,7 @@ namespace FantasyRpg.Shop
                 itemType = "chestplate",
                 gold = 1000,
                 def = 15,
+                vit = 20,
                 crit = 10,
                 maxHp = 100,
             });
@@ -181,6 +185,7 @@ namespace FantasyRpg.Shop
                 gold = 2500,
                 str = 50,
                 crit = 10,
+                vit = 25,
                 maxHp = 100,
             });
 
@@ -198,6 +203,7 @@ namespace FantasyRpg.Shop
                 itemType = "legs",
                 gold = 1000,
                 str = 5,
+                vit = 10,
                 def = 35,
                 maxHp = 150,
             });
@@ -208,6 +214,7 @@ namespace FantasyRpg.Shop
                 gold = 2500,
                 str = 40,
                 def = 45,
+                vit = 30,
 
             });
 
@@ -218,6 +225,7 @@ namespace FantasyRpg.Shop
                 gold = 250,
                 crit = 2,
                 str = 5,
+                vit = 5,
                 def = 10,
             });
             armor.Add(new Merchant
@@ -227,6 +235,7 @@ namespace FantasyRpg.Shop
                 gold = 1000,
                 crit = 5,
                 def = 15,
+                vit = 10,
                 str = 10,
             });
             armor.Add(new Merchant
@@ -236,6 +245,7 @@ namespace FantasyRpg.Shop
                 gold = 2500,
                 crit = 10,
                 def = 25,
+                vit = 15,
                 str = 20,
                 maxHp = 100,
             });

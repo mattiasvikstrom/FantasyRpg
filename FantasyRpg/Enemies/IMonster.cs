@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using FantasyRpg.Player;
 
 namespace FantasyRpg.Enemies
@@ -18,6 +16,7 @@ namespace FantasyRpg.Enemies
         int lvl { get; set; }
         int def { get; set; }
 
+        //Must have methods for monsters
         void MonsterCombat(Hero hero,List<Monster> mob,int b);
         public virtual int MonsterAttackBasic()
         {

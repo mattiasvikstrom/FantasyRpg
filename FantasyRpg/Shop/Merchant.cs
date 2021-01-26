@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FantasyRpg.Player;
+using FantasyRpg.LocalInn;
 
 namespace FantasyRpg.Shop
 {
@@ -9,84 +10,99 @@ namespace FantasyRpg.Shop
     {
         public string itemType;
         public int itemId;
-        
 
         public Merchant()
         {
 
         }
+        //Main menu in the shop
         public static void ItemShop(Hero hero, List<Merchant> items, List<Merchant> armor, List<Merchant> weapon, List<Merchant> equipment)
         {
             Console.Clear();
-            Console.WriteLine("*******************************\n" +
-                              "* Welcome to the item shop!\n" +
-                              "* What do you want to buy?\n" +
-                             $"* You have {hero.gold} gold.\n" +
-                              "*******************************\n" +
-                             $"[1]. Items\n" +
-                             $"[2]. Armor\n" +
-                             $"[3]. Weapons\n" +
-                             $"[Q]. Back\n" +
-                             $"*******************************");
-            Console.Write(">>");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            string input = Console.ReadLine(); //Validation. ha menyn i loop och menyval för exit shop?
-            Console.ResetColor();
-            switch (input)
-            {
-                case "1":
-                    ListItems(items, equipment, hero);
-                    ValidatePurchase(hero, items, equipment);
-                    break;
-                case "2":
-                    ListItems(armor, equipment, hero);
-                    ValidatePurchase(hero, armor, equipment);
-                    break;
-                case "3":
-                    ListItems(weapon, equipment, hero);
-                    ValidatePurchase(hero, weapon, equipment);
-                    break;
-                default:
-                    break;
-            }
-        }
-        private static string ValidatePurchase(Hero hero, List<Merchant> itemsx, List<Merchant> equipment) //bättre namngivning på itemsx för generell lista.
-        {
+            
             string input;
-            int intInput;
-            Console.WriteLine("Enter number of item to buy, " +
-                              " and press [Q] to exit shop\n" +
-                              ">>" );
-            input = Console.ReadLine();
+            bool inMenu = false;
+            
             do
             {
+                Console.WriteLine("*******************************\n" +
+                                  "* Welcome to the item shop!\n" +
+                                  "* What do you want to buy?\n" +
+                                 $"* You have {hero.gold} gold.\n" +
+                                  "*******************************\n" +
+                                 $"[1]. Items\n" +
+                                 $"[2]. Armor\n" +
+                                 $"[3]. Weapons\n" +
+                                 $"[Q]. Back\n" +
+                                 $"*******************************");
+
+                Console.Write(">>");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                input = Console.ReadLine(); //Validation. ha menyn i loop och menyval för exit shop?
+                Console.ResetColor();
+                switch (input)
+                {
+                    case "1":
+                        Inn.ListEnhancements(items);
+                        inMenu = ValidatePurchase(hero, items, equipment);
+                        break;
+                    case "2":
+                        ListItems(armor, equipment, hero);
+                        inMenu = ValidatePurchase(hero, armor, equipment);
+                        break;
+                    case "3":
+                        ListItems(weapon, equipment, hero);
+                        inMenu = ValidatePurchase(hero, weapon, equipment);
+                        break;
+                    case "Q":
+                        inMenu = true;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid input");
+                        break;
+                }
+            } while (!inMenu);
+        }
+        //Evaluates if the input is a valid item and if the hero can actually afford to purchace it, or if the user chooses to exit the shop
+        //othervise proceedes with the purchase
+        private static bool ValidatePurchase(Hero hero, List<Merchant> itemsx, List<Merchant> equipment)
+        {
+            bool inMenu = false;
+
+                string input;
+                int intInput;
+                Console.WriteLine("\nEnter number of item to buy, " +
+                                  " and press [Q] to exit shop\n" +
+                                  ">>");
+                input = Console.ReadLine();
+            
                 if (Int32.TryParse(input, out intInput) && intInput <= itemsx.Count && intInput > 0)
                 {
                     if (hero.gold >= itemsx[intInput - 1].gold)
                     {
                         BuyItem(itemsx, equipment, hero, intInput);
                         hero.gold -= itemsx[intInput - 1].gold;
+                        inMenu = true;
                     }
                     else
                     {
                         Console.WriteLine("You do not have enough gold to purchase this");
                     }
                 }
-                else
+                else if(input == "q" || input == "Q")
                 {
-                    Console.WriteLine("You did not select a valid choice");
+                    inMenu = true;
                 }
-                
-            } while (Console.ReadKey().Key != ConsoleKey.Q);
-            
-            return input;
+
+            return inMenu;
         }
+        //After validation of the purchase the item itemType is referensed and located in the switchstatement. It calls for the ItemEquip method and also then
+        //updates what the hero is currently wearing.
         public static void BuyItem(List<Merchant> itemsx, List<Merchant> equipment, Hero hero, int intInput)
         {
             //which item to equip
             var itemType = itemsx[intInput - 1].itemType;
-             //TEST VARIABLE
-
+            
             //All "equippment slots" so that they can be tracked. This definition is also carried on to compare which item is currently in that itemslot
             //because we need to remove it and its added attributes to our hero. Only applied to equipment rather than items(permanent buffs) in the shop
 
@@ -123,23 +139,21 @@ namespace FantasyRpg.Shop
                     break;
             }
             Console.ResetColor();
-            //string input = Console.ReadLine();
-            //if the item purchaced has more than 0 in the possible stats avaliable for items then it will be added from the chosen item.
-            //leaves me to be able to only add new items and not having to worry about anything else for the shop part!
-            //since an item can have multiple stats on it this functions well. 
+            
+            
 
-            //Add counter per item? how many do you own of each? seperate list that you could. sell from?or just display in character stats.
-            //work with logic for stats that have a max cap
+            
 
             //adds attributes from item to player when item is equiped
             AddAttributes(itemsx, hero, intInput);
             HeroMethods.Updating(hero);
         }
-
+        //Locates the currently equipped items location in its list, and calls for RemoveAttributes method to remove attributes gained by the item.
+        //When it is done the new item is added to equipment list, what the hero is currently wearing
         private static int ItemEquip(List<Merchant> itemsx, List<Merchant> equipment, Hero hero, int intInput, string itemType)
         {
             var removeItem = 0;
-            if (equipment.Any(s => s.itemType.Contains(itemType))) //verkar fungera, se om det kan bli metod för alla möjligheter..
+            if (equipment.Any(s => s.itemType.Contains(itemType)))
             {
                 removeItem = equipment.FindIndex(item => item.itemType == itemType);
                 Console.WriteLine($"Unequipped {equipment[removeItem].name}");
@@ -151,13 +165,10 @@ namespace FantasyRpg.Shop
             Console.WriteLine($"You equipped {itemsx[intInput - 1].name}");
             return removeItem;
         }
-
+        //compares what the hero is currently wearing. Since the equipped item has a string we referens it below to locate the items position in the list
+        //which allows us to remove its attributes from the hero when item is removed.
         private static void RemoveAttributes(List<Merchant> equipment, Hero hero, int intInput, string itemType)
         {
-            //compares what the hero is currently wearing. Since the equipped item has a string we referens it below to locate the items position in the list
-            //which allows us to remove its attributes from the hero when item is removed.
-            //var test = intInput;
-            
             if (equipment[intInput].def != 0)
             {
                 hero.def -= equipment[intInput].def;
@@ -189,9 +200,12 @@ namespace FantasyRpg.Shop
                 Console.WriteLine($"Removed {equipment[intInput].attackPower} attackpower");
             }
         }
-
+        //Evaluates stats on purchased item/equipment and adds it to hero
         public static void AddAttributes(List<Merchant> items, Hero hero, int intInput)
         {
+            //if the item purchaced has more than 0 in the possible stats avaliable for items then it will be added from the chosen item.
+            //leaves me to be able to only add new items and not having to worry about anything else for the shop part!
+            //since an item can have multiple stats on it. 
             Console.ForegroundColor = ConsoleColor.Green;
             if (items[intInput - 1].def != 0)
             {
@@ -230,7 +244,10 @@ namespace FantasyRpg.Shop
                 }
             }
             Console.ResetColor();
+            
         }
+        //Method presents Armor and Weapons, compares heros current gear and displays basic information and also what will be gained/lossed or unchanged by
+        //getting an armor/weapon. 
         public static void ListItems(List<Merchant> items, List<Merchant> equipment, Hero hero)
         {
             int i = 1;
@@ -242,7 +259,7 @@ namespace FantasyRpg.Shop
             foreach (var item in items)
             {
                 Console.Write($"{i++}. || {items[j].itemType} || {items[j].name} Cost: {items[j].gold} gold");
-                //if item in list is on the player, its noted as equipped after its listing
+                //if an item in the list is equipped the player, its noted as equipped after its listing
                 if (items[j].name == hero.helmet || items[j].name == hero.shoulder || items[j].name == hero.chestArmor || items[j].name == hero.gloves || items[j].name == hero.legs || items[j].name == hero.boots || items[j].name == hero.weapon)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
@@ -253,6 +270,7 @@ namespace FantasyRpg.Shop
                 int itermId = 0;
                 if (equipment.Any(s => s.itemType.Equals(items[j].itemType)))
                 {
+                    //locate the type of equipment type ex "helmet" "weapon". 
                     foreach (var itemId in equipment)
                     {
                         if (itemId.itemType == items[j].itemType)
@@ -316,7 +334,7 @@ namespace FantasyRpg.Shop
                 j++;
             }
         }
-        //Depending on value the color of the text will change for the attribute.
+        //Depending on value the color of the text will change for the attribute. positive = green, negative = red, unchanged = yellow
         private static int ColorOfGain(int stat)
         {
             if (stat < 0)

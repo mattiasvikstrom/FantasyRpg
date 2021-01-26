@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using FantasyRpg.Shop;
 using FantasyRpg.Player;
 using FantasyRpg.Enemies;
@@ -17,16 +16,16 @@ namespace FantasyRpg
         {
             Console.Title = "Fantasy RPG";
             List<Merchant> equipment = Armor.StarterArmor();
-            List<Merchant> weapon = Weapons.AddWeapon(); //om det blir problem är det säkert kring Weapons och vart listan är placerad.
+            List<Merchant> weapon = Weapons.AddWeapon();
             List<Merchant> armor = Armor.AddArmor();
             List<Merchant> items = Items.AddItems();
             List<Merchant> food = Inn.AddFood();
             Hero hero = CreateHero(equipment, armor);
-            //List<Merchant> testList = Armor.TestClass();
 
             bool activeGame = false;
             do
             {
+                
                 Console.WriteLine("\n**************************************\n" +
                                     "* 1. Go Adventuring\n" +
                                     "* 2. Show details about your character\n" +
@@ -66,6 +65,7 @@ namespace FantasyRpg
                 }
             } while (!activeGame);
         }
+        //Method handles taking the name and creating the hero, adds and assigns gear to hero
         public static Hero CreateHero(List<Merchant> equipment, List<Merchant> armor)
         {
             string heroName = Initialize();
@@ -97,6 +97,7 @@ namespace FantasyRpg
             HeroMethods.Updating(hero);
             return hero;
         }
+        //Takes in the hero name and returns it
         public static string Initialize()
         {
             Console.WriteLine("Welcome to Fantasy RPG!\n" +
@@ -107,6 +108,7 @@ namespace FantasyRpg
             Console.ResetColor();
             return heroName;
         }
+        //Handles Monsters random attack damage ...... change location and use same for hero and monsters accordingly...
         public static int RandomAttackDamage(int minDamage, int maxDamage)
         {
             var rand = new Random();
@@ -114,10 +116,12 @@ namespace FantasyRpg
              
             return ran;
         }
+        //If the hero is victoious the hero is granted the current monsters gold
         public static void TakeGold(Hero hero, Monster mob)
         {
             hero.gold += mob.gold;
         }
+        //Method for players who find it a bit too challanging!! adds a new item also to the armor shop
         public static void GodMode(Hero hero, List<Merchant> armor, string heroName)
         {
             if (heroName == "Robin" || heroName == "Isshin")

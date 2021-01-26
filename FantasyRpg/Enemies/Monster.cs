@@ -1,7 +1,6 @@
 ﻿using FantasyRpg.Player;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FantasyRpg.Enemies
 {
@@ -29,12 +28,13 @@ namespace FantasyRpg.Enemies
         {
             name = _name;
         }
-        //basic attack method, can be overridden
+        //Calculates the monster damage
         public virtual int MonsterDamage(List<Monster> mob, int b)
         {
             int mobDamage = Game.RandomAttackDamage(minDamage, maxDamage);
             return mobDamage;
         }
+        //Evaluates which of the possible monsterattacks is to be performed
         public virtual float MonsterAttackList(float mobDamage)
         {
             Random ran = new Random();
@@ -53,6 +53,7 @@ namespace FantasyRpg.Enemies
             }
             return mobDamage;
         }
+        //Monsters have basic, normal and special, they are overridden on each monster and can do different damage
         public virtual float MonsterAttackBasic(float mobDamage)
         {
             return mobDamage;
@@ -65,9 +66,9 @@ namespace FantasyRpg.Enemies
         {
             return mobDamage;
         }
+        //Handles the monster portion of the combat, rest is handled in HeroMethods.Battle()
         public virtual void MonsterCombat(Hero hero, List<Monster> mob, int b)
         {
-            
             float mobDamage = MonsterDamage(mob, b);
             mobDamage = MonsterAttackList(mobDamage);
 
@@ -78,24 +79,20 @@ namespace FantasyRpg.Enemies
             {
                 mobDamage = 0;
             }
-            
             else
             {
                 hero.hp -= mobDamage;
             }
-            
-            
-
             Console.WriteLine($"{mob[b].name} does {mobDamage} damage");
             Console.WriteLine($"{hero.name} has hp: {hero.hp} left\n");
-            
         }
 
         //Chance to face a specialist version of the opponent with increased stats
         public virtual void Specialist()
         {
-
+            //not implemented yet
         }
+        //Method evaluates current level of the hero to determine which monsters are to be randomly choosen for battle
         public static int CheckLevel(Hero hero)
         {
             int randomNumb = 0;
@@ -120,6 +117,7 @@ namespace FantasyRpg.Enemies
 
             return randomNumb;
         }
+        //Method containing the possible monsters for combat
         public static List<Monster> CreateMonster(Hero hero)
         {
             var randomNumb = CheckLevel(hero);
@@ -153,9 +151,10 @@ namespace FantasyRpg.Enemies
                 };
             return mob;
         }
+        //Method handles adjusting the monsters stats to continue putting up a somewhat challanging experience
         public static void MonsterAdjustStats(List<Monster> mob, Hero hero, int b)
         {
-            mob[b].gold = mob[b].gold * hero.lvl;
+            mob[b].gold = mob[b].gold * hero.lvl / 2;
             mob[b].hp = mob[b].hp * hero.lvl;
             mob[b].minDamage *= hero.lvl / 2;
             mob[b].maxDamage *= hero.lvl / 2;

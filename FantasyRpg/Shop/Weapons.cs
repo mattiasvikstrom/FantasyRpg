@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FantasyRpg.Player;
+﻿using System.Collections.Generic;
 
 namespace FantasyRpg.Shop
 {
     class Weapons : Merchant
     {
-        
+        //Adding of all the avaliable weapons avaliable to be purchased at the shop
         public static List<Merchant> AddWeapon()
         {
             List<Merchant> weapon = new List<Merchant>();
-            
-            // Possible Stats on weapons
-            // WeaponDamage, Str, Attackpower, crit, maxHp
-            //
 
             weapon.Add(new Merchant
             {
@@ -26,14 +19,13 @@ namespace FantasyRpg.Shop
                 attackPower = 38,
                 crit = 4,
                 str = 5,
-
             });
             weapon.Add(new Merchant
             {
                 name = "Mythril Saber",
                 itemType = "weapon",
                 itemId = 1013,
-                gold = 1000,
+                gold = 650,
                 weaponDamage = 23,
                 attackPower = 40,
                 crit = 10,
@@ -44,43 +36,44 @@ namespace FantasyRpg.Shop
                 name = "Hardedge",
                 itemType = "weapon",
                 itemId = 1014,
-                gold = 600,
+                gold = 800,
                 weaponDamage = 32,
                 attackPower = 42,
-                crit = 10,
-                str = 7,
+                crit = 15,
+                str = 3,
             });
             weapon.Add(new Merchant
             {
                 name = "Butterfly Edge",
                 itemType = "weapon",
                 itemId = 1015,
-                gold = 600,
+                gold = 950,
                 weaponDamage = 39,
                 attackPower = 44,
-                crit = 10,
-                str = 7,
+                crit = 5,
+                str = 5,
             });
             weapon.Add(new Merchant
             {
                 name = "Enhance Sword",
                 itemType = "weapon",
                 itemId = 1016,
-                gold = 600,
+                gold = 1150,
                 weaponDamage = 43,
                 attackPower = 46,
-                crit = 10,
-                str = 7,
+                crit = 8,
+                str = 4,
             });
             weapon.Add(new Merchant
             {
                 name = "Organics",
                 itemType = "weapon",
                 itemId = 1017,
-                gold = 600,
+                gold = 1300,
                 weaponDamage = 62,
                 attackPower = 48,
                 crit = 10,
+                def = 5,
                 str = 7,
             });
             weapon.Add(new Merchant
@@ -88,7 +81,7 @@ namespace FantasyRpg.Shop
                 name = "Crystal Sword",
                 itemType = "weapon",
                 itemId = 1018,
-                gold = 600,
+                gold = 1450,
                 weaponDamage = 76,
                 attackPower = 50,
                 crit = 10,
@@ -99,21 +92,23 @@ namespace FantasyRpg.Shop
                 name = "Force Stealer",
                 itemType = "weapon",
                 itemId = 1019,
-                gold = 600,
+                gold = 1600,
                 weaponDamage = 71,
                 attackPower = 52,
-                crit = 10,
-                str = 7,
+                crit = 12,
+                maxHp = 50,
+                str = 2,
             });
             weapon.Add(new Merchant
             {
                 name = "Rune Blade",
                 itemType = "weapon",
                 itemId = 1020,
-                gold = 600,
+                gold = 1750,
                 weaponDamage = 71,
                 attackPower = 50,
                 crit = 10,
+                def = 5,
                 str = 7,
             });
             weapon.Add(new Merchant
@@ -121,10 +116,11 @@ namespace FantasyRpg.Shop
                 name = "Murasame",
                 itemType = "weapon",
                 itemId = 1021,
-                gold = 600,
+                gold = 1900,
                 weaponDamage = 71,
                 attackPower = 50,
                 crit = 10,
+                vit = 5,
                 str = 7,
             });
             weapon.Add(new Merchant
@@ -132,18 +128,18 @@ namespace FantasyRpg.Shop
                 name = "Nail Bat",
                 itemType = "weapon",
                 itemId = 1022,
-                gold = 600,
+                gold = 2050,
                 weaponDamage = 71,
                 attackPower = 50,
-                crit = 10,
-                str = 7,
+                crit = 7,
+                str = 6,
             });
             weapon.Add(new Merchant
             {
                 name = "Yoshiyuki",
                 itemType = "weapon",
                 itemId = 1023,
-                gold = 600,
+                gold = 2300,
                 weaponDamage = 71,
                 attackPower = 50,
                 crit = 10,
@@ -154,10 +150,11 @@ namespace FantasyRpg.Shop
                 name = "Apocalypse",
                 itemType = "weapon",
                 itemId = 1024,
-                gold = 600,
+                gold = 2450,
                 weaponDamage = 88,
                 attackPower = 50,
                 crit = 10,
+                def = 5,
                 str = 7,
             });
             weapon.Add(new Merchant
@@ -165,21 +162,22 @@ namespace FantasyRpg.Shop
                 name = "Heaven's Cloud",
                 itemType = "weapon",
                 itemId = 1025,
-                gold = 600,
+                gold = 2600,
                 weaponDamage = 93,
                 attackPower = 50,
                 crit = 10,
-                str = 7,
+                vit = 20,
+                str = 6,
             });
             weapon.Add(new Merchant
             {
                 name = "Ragnarok",
                 itemType = "weapon",
                 itemId = 1026,
-                gold = 600,
+                gold = 2750,
                 weaponDamage = 97,
                 attackPower = 50,
-                crit = 10,
+                crit = 11,
                 str = 7,
             });
             weapon.Add(new Merchant
@@ -187,11 +185,12 @@ namespace FantasyRpg.Shop
                 name = "Ultima Weapon",
                 itemType = "weapon",
                 itemId = 1027,
-                gold = 600,
+                gold = 3500,
                 weaponDamage = 100,
                 attackPower = 120,
-                crit = 10,
-                str = 7,
+                maxHp = 100,
+                crit = 12,
+                str = 8,
             });
             return weapon;
         }

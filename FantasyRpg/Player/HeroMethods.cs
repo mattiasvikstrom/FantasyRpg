@@ -7,7 +7,7 @@ namespace FantasyRpg.Player
     class HeroMethods
     {
         
-        
+        //Hero attack Basic, normal and special , they differ in damage and special is a lower chance attack that heals the hero.
         public static float HeroAttackBasic(Hero hero, List<Monster> mob, float heroDamage, int b)
         {
             Console.WriteLine($"{hero.name} attacks head on with {hero.weapon}");
@@ -116,12 +116,12 @@ namespace FantasyRpg.Player
             //generate monster for the battle
             List<Monster> mob = Monster.CreateMonster(hero);
             
-            //variables something something
-            var a = mob.Count;
-            int b = Convert.ToInt32(a - 1);
+            //Get the correct placement of the monster in mob list
+            int b = mob.Count - 1;
 
-            //test om jag kan modifiera monster baserad på lvl
+            //Method call to modify the monster based on players level
             Monster.MonsterAdjustStats(mob, hero, b);
+
             int i = 0;
             int roundCounter = 0;
             bool battleOutcome = false;
@@ -209,6 +209,7 @@ namespace FantasyRpg.Player
             }
 
         }
+        //method is called when the hero has met criteria for a level up
         public static void LvlUp(Hero hero)
         {
             //notes stats before levelup to retrieve the gained amount
@@ -246,6 +247,7 @@ namespace FantasyRpg.Player
                 }
             }
         }
+        //Evaluates the chance for a critical strike, the chance is dependent on the hero crit stat and chance increases by having higher stat value
         public static int CriticalChance(Hero hero)
         {
 
@@ -258,6 +260,7 @@ namespace FantasyRpg.Player
             }
             return critChance;
         }
+        //Evaluates chance for a battle to occur
         public static bool BattleChance()
         {
             bool activeFight = true;
@@ -276,17 +279,16 @@ namespace FantasyRpg.Player
             }
             return activeFight;
         }
+        //Evaluates hero damage based on min and max damage of the hero, calls randomAttackDamage() for damage.
         public static int HeroDamage(Hero hero)
         {
-            //hero attack , from mindmg to maxdmg , finjustera systemet för dmg
-            
             int min = Convert.ToInt32(hero.minDamage);
-            int max = Convert.ToInt32(hero.maxDamage); //maybe move to base class. as min and max dmg
-            var heroDmg = new Random();
-            var heroDamage = heroDmg.Next(min, max);
+            int max = Convert.ToInt32(hero.maxDamage);
+            var heroDamage = Game.RandomAttackDamage(min, max);
 
             return heroDamage;
         }
+        //Called between Hero and opponent turn and calls for an Return keypress
         static void Continue(Hero hero, List<Monster> mob, int b)
         {
 
