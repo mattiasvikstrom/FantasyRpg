@@ -15,8 +15,8 @@ namespace FantasyRpg.Enemies
             name = _name;
             NameRare = "Golden Tonberry";
             hp = 1000;
-            minDamage = 20;
-            maxDamage = 55;
+            minDamage = 37;
+            maxDamage = 60;
             gold = 300;
             exp = 150;
         }

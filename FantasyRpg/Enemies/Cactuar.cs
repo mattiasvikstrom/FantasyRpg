@@ -15,8 +15,8 @@ namespace FantasyRpg.Enemies
             name = _name;
             NameRare = "Mad Cactuar";
             hp = 1200;
-            minDamage = 30;
-            maxDamage = 60;
+            minDamage = 1;
+            maxDamage = 80;
             gold = 320;
             exp = 150;
         }

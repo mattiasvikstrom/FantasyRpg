@@ -4,10 +4,8 @@ using System.Collections.Generic;
 
 namespace FantasyRpg.Enemies
 {
-
     abstract class Monster : IMonster
     {
-         //se så detta inte fuckar upp vem jag möter etc.
         public string name { get; set; }
         public string NameRare { get; set; }
         public float hp { get; set; }
@@ -22,7 +20,6 @@ namespace FantasyRpg.Enemies
 
         public Monster()
         {
-
         }
         public Monster(string _name)
         {
@@ -34,7 +31,7 @@ namespace FantasyRpg.Enemies
             int mobDamage = Game.RandomAttackDamage(minDamage, maxDamage);
             return mobDamage;
         }
-        //Evaluates which of the possible monsterattacks is to be performed
+        //Evaluates which of the possible monster attacks is to be performed
         public virtual float MonsterAttackList(float mobDamage)
         {
             Random ran = new Random();
@@ -74,7 +71,7 @@ namespace FantasyRpg.Enemies
 
             mobDamage = (int)Math.Round(mobDamage);
             mobDamage -= hero.def;
-            //monsterdamage cant be lower than 0
+            //monster damage cant be lower than 0
             if (mobDamage < 0)
             {
                 mobDamage = 0;
@@ -92,7 +89,7 @@ namespace FantasyRpg.Enemies
         {
             //not implemented yet
         }
-        //Method evaluates current level of the hero to determine which monsters are to be randomly choosen for battle
+        //Method evaluates current level of the hero to determine which monsters are to be randomly chosen for battle
         public static int CheckLevel(Hero hero)
         {
             int randomNumb = 0;
@@ -114,7 +111,6 @@ namespace FantasyRpg.Enemies
             {
                 randomNumb = randomNum.Next(7, 9);
             }
-
             return randomNumb;
         }
         //Method containing the possible monsters for combat
@@ -151,14 +147,17 @@ namespace FantasyRpg.Enemies
                 };
             return mob;
         }
-        //Method handles adjusting the monsters stats to continue putting up a somewhat challanging experience
+        //Method handles adjusting the monsters stats to continue putting up a somewhat challenging experience
         public static void MonsterAdjustStats(List<Monster> mob, Hero hero, int b)
         {
             mob[b].gold = mob[b].gold * hero.lvl / 2;
-            mob[b].hp = mob[b].hp * hero.lvl;
-            mob[b].minDamage *= hero.lvl / 2;
-            mob[b].maxDamage *= hero.lvl / 2;
-            mob[b].def *= hero.lvl / 2; 
+            mob[b].hp *= hero.lvl;
+            if(hero.lvl > 1)
+            {
+                mob[b].minDamage *= hero.lvl / 2;
+                mob[b].maxDamage *= hero.lvl / 2;
+            }
+            mob[b].def *= hero.lvl / 2;
         }
     }
 }

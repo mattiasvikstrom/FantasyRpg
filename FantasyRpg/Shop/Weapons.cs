@@ -82,7 +82,7 @@ namespace FantasyRpg.Shop
                 itemType = "weapon",
                 itemId = 1018,
                 gold = 1450,
-                weaponDamage = 76,
+                weaponDamage = 66,
                 attackPower = 50,
                 crit = 10,
                 str = 7,
@@ -93,7 +93,7 @@ namespace FantasyRpg.Shop
                 itemType = "weapon",
                 itemId = 1019,
                 gold = 1600,
-                weaponDamage = 71,
+                weaponDamage = 70,
                 attackPower = 52,
                 crit = 12,
                 maxHp = 50,
@@ -105,7 +105,7 @@ namespace FantasyRpg.Shop
                 itemType = "weapon",
                 itemId = 1020,
                 gold = 1750,
-                weaponDamage = 71,
+                weaponDamage = 73,
                 attackPower = 50,
                 crit = 10,
                 def = 5,
@@ -117,7 +117,7 @@ namespace FantasyRpg.Shop
                 itemType = "weapon",
                 itemId = 1021,
                 gold = 1900,
-                weaponDamage = 71,
+                weaponDamage = 76,
                 attackPower = 50,
                 crit = 10,
                 vit = 5,
@@ -129,7 +129,7 @@ namespace FantasyRpg.Shop
                 itemType = "weapon",
                 itemId = 1022,
                 gold = 2050,
-                weaponDamage = 71,
+                weaponDamage = 80,
                 attackPower = 50,
                 crit = 7,
                 str = 6,
@@ -140,10 +140,10 @@ namespace FantasyRpg.Shop
                 itemType = "weapon",
                 itemId = 1023,
                 gold = 2300,
-                weaponDamage = 71,
+                weaponDamage = 84,
                 attackPower = 50,
                 crit = 10,
-                str = 7,
+                str = 10,
             });
             weapon.Add(new Merchant
             {
@@ -153,9 +153,7 @@ namespace FantasyRpg.Shop
                 gold = 2450,
                 weaponDamage = 88,
                 attackPower = 50,
-                crit = 10,
-                def = 5,
-                str = 7,
+                crit = 30,
             });
             weapon.Add(new Merchant
             {

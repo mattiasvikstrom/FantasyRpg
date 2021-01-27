@@ -18,7 +18,7 @@ namespace FantasyRpg.Enemies
             minDamage = 40;
             maxDamage = 85;
             gold = 600;
-            exp = 300;
+            exp = 275;
         }
         public override float MonsterAttackBasic(float mobDamage)
         {

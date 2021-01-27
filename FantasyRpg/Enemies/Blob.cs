@@ -15,9 +15,9 @@ namespace FantasyRpg.Enemies
             name = _name;
             NameRare = "Crimson Blob";
             hp = 600;
-            minDamage = 25;
+            minDamage = 36;
             maxDamage = 55;
-            gold = 220;
+            gold = 250;
             exp = 60;
         }
         public override float MonsterAttackBasic(float mobDamage)
@@ -39,10 +39,10 @@ namespace FantasyRpg.Enemies
         }
         public override void Specialist()
         {
-            name = NameRare;
-            hp *= 10;
-            minDamage *= 10;
-            maxDamage *= 10;
+            //name = NameRare;
+            //hp *= 10;
+            //minDamage *= 10;
+            //maxDamage *= 10;
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace FantasyRpg
 {
-    class Game
+    static class Game
     {
         public static void Start()
         {
@@ -25,7 +25,6 @@ namespace FantasyRpg
             bool activeGame = false;
             do
             {
-                
                 Console.WriteLine("\n**************************************\n" +
                                     "* 1. Go Adventuring\n" +
                                     "* 2. Show details about your character\n" +
@@ -40,13 +39,13 @@ namespace FantasyRpg
 
                 switch (menuChoice)
                 {
-                    case "1": // hero enters battlephase , returns bool which if player dies ends game
+                    case "1": // hero enters battle phase , returns boolean which if player dies ends game
                         activeGame = HeroMethods.Battle(hero);
                         break;
-                    case "2": //prints Hero stats and current equipment from Tostring in Hero
+                    case "2": //prints Hero stats and current equipment from ToString in Hero
                         Console.WriteLine(hero);
                         break;
-                    case "3": //Allows hero to rest at in in exchange for gold, this heals the player to full health
+                    case "3": //Allows hero to rest at in exchange for gold, this heals the player to full health
                         Inn.VisitInn(hero, food);
                         break;
                     case "4": //Enters shop, where all equipment is located, when purchased items are auto equipped.
@@ -54,8 +53,6 @@ namespace FantasyRpg
                         break;
                     case "5": // quits game
                         activeGame = true;
-                        break;
-                    default:
                         break;
                 }
                 if (hero.lvl >= 10)
@@ -70,7 +67,6 @@ namespace FantasyRpg
         {
             string heroName = Initialize();
             Hero hero = new Hero(heroName);
-            
             int ind = 1;
             Console.WriteLine($"\n Greeting {hero.name}, let's get you sorted with some items. It is a harsh world... \n");
             Thread.Sleep(2000);
@@ -113,15 +109,14 @@ namespace FantasyRpg
         {
             var rand = new Random();
             var ran = rand.Next(minDamage, maxDamage);
-             
             return ran;
         }
-        //If the hero is victoious the hero is granted the current monsters gold
+        //If the hero is victorious the hero is granted the current monsters gold
         public static void TakeGold(Hero hero, Monster mob)
         {
             hero.gold += mob.gold;
         }
-        //Method for players who find it a bit too challanging!! adds a new item also to the armor shop
+        //Method for players who find it a bit too challenging!! adds a new item also to the armor shop
         public static void GodMode(Hero hero, List<Merchant> armor, string heroName)
         {
             if (heroName == "Robin" || heroName == "Isshin")

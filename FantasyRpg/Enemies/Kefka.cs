@@ -16,7 +16,7 @@ namespace FantasyRpg.Enemies
             minDamage = 40;
             maxDamage = 100;
             gold = 1000;
-            exp = 500;
+            exp = 350;
         }
         public override float MonsterAttackBasic(float mobDamage)
         {
@@ -32,7 +32,7 @@ namespace FantasyRpg.Enemies
         public override float MonsterAttackSpecial(float mobDamage)
         {
             Console.WriteLine($"{name} casts Meteor!!");
-            mobDamage *= 2;
+            mobDamage *= 3;
             return mobDamage;
         }
     }

@@ -17,8 +17,8 @@ namespace FantasyRpg.Enemies
             name = _name;
             NameRare = "Rogue Specialist";
             hp = 600;
-            minDamage = 28;
-            maxDamage = 40;
+            minDamage = 38;
+            maxDamage = 60;
             gold = 200;
             exp = 75;
         }
@@ -43,20 +43,11 @@ namespace FantasyRpg.Enemies
         //Chance to face a power powerful monster. not fully implemented
         public override void Specialist()
         {
-            name = NameRare;
-            hp *= 10 / 5;
-            minDamage *= 10 / 8;
-            maxDamage *= 10 / 8;
+            //name = NameRare;
+            //hp *= 10 / 5;
+            //minDamage *= 10 / 8;
+            //maxDamage *= 10 / 8;
         }
-        //keep for test printing and stats check
-        public override string ToString()
-        {
-            return $"Heeeeloo {name}\n" +
-                   $"HP {hp}\n" +
-                   $"MIN {minDamage}\n" +
-                   $"MAX {maxDamage}\n" +
-                   $"GOLD {gold}\n" +
-                   $"EXP {exp}\n";
-        }
+        
     }
 }

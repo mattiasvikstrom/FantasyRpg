@@ -16,7 +16,7 @@ namespace FantasyRpg.Enemies
         int lvl { get; set; }
         int def { get; set; }
 
-        //Must have methods for monsters
+        //Must have methods for Monster
         void MonsterCombat(Hero hero,List<Monster> mob,int b);
         public virtual int MonsterAttackBasic()
         {
@@ -30,7 +30,5 @@ namespace FantasyRpg.Enemies
         {
             return minDamage;
         }
-        
-        //int GiveGold();
     }
 }

@@ -14,8 +14,7 @@ namespace FantasyRpg.LocalInn
         {
             Console.Clear();
             float gold = 500;
-            //validering och metod ska göras
-            //kunna äta mat och få bonus? dyrare att sova över.
+            
             Console.WriteLine($"1. Spend the night at the Inn? {gold} gold per night\n" +
                               "2. Eat something\n" +
                               "press [Q] to exit Inn");
@@ -39,15 +38,19 @@ namespace FantasyRpg.LocalInn
                         }
                         break;
                     case "2":
-                        ListEnhancements(food); //backa i meny för mat.
+                        ListEnhancements(food);
                         Console.Write("\nWhat would you like to eat?\n" +
                                       ">>");
                         input = (Console.ReadLine());
                         if (Int32.TryParse(input, out intInput) && intInput <= food.Count && intInput > 0)
                         {
-                            EatFood(food, hero, intInput);
-                            Merchant.AddAttributes(food, hero, intInput);
-                            Thread.Sleep(1000);
+                        EatFood(food, hero, intInput);
+                        Merchant.AddAttributes(food, hero, intInput);
+                        Thread.Sleep(1000);
+                        }
+                    else if (input == "q" || input == "Q")
+                        {
+                        break;
                         }
                         else
                         {
@@ -83,6 +86,11 @@ namespace FantasyRpg.LocalInn
                 var crit = food[j].crit;
                     Console.Write($" Crit: {crit}");
                 }
+                if (food[j].attackPower != 0)
+                {
+                    var ap = food[j].attackPower;
+                    Console.Write($" Attackpower: {ap}");
+                }
                 j++;
             }
             
@@ -110,16 +118,32 @@ namespace FantasyRpg.LocalInn
                 name = "Harty stew",
                 itemType = "food",
                 gold = 250,
-                def = 1,
-                crit = 1,
+                def = 2,
+                vit = 2,
             });
             food.Add(new Merchant
             {
                 name = "Moonberry cake",
                 itemType = "food",
+                gold = 250,
+                str = 2,
+                crit = 2,
+            });
+            food.Add(new Merchant
+            {
+                name = "Roasted Quail",
+                itemType = "food",
                 gold = 350,
                 def = 2,
-                str = 2,
+                maxHp = 30,
+            });
+            food.Add(new Merchant
+            {
+                name = "Homemade Cherry Pie",
+                itemType = "food",
+                gold = 550,
+                attackPower = 20,
+                str = 4,
             });
             return food;
         }

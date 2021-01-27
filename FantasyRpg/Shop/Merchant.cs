@@ -13,16 +13,13 @@ namespace FantasyRpg.Shop
 
         public Merchant()
         {
-
         }
         //Main menu in the shop
         public static void ItemShop(Hero hero, List<Merchant> items, List<Merchant> armor, List<Merchant> weapon, List<Merchant> equipment)
         {
             Console.Clear();
-            
             string input;
             bool inMenu = false;
-            
             do
             {
                 Console.WriteLine("*******************************\n" +
@@ -38,7 +35,7 @@ namespace FantasyRpg.Shop
 
                 Console.Write(">>");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                input = Console.ReadLine(); //Validation. ha menyn i loop och menyval för exit shop?
+                input = Console.ReadLine();
                 Console.ResetColor();
                 switch (input)
                 {
@@ -55,16 +52,16 @@ namespace FantasyRpg.Shop
                         inMenu = ValidatePurchase(hero, weapon, equipment);
                         break;
                     case "Q":
-                        inMenu = true;
+                        inMenu = false;
                         break;
                     default:
                         Console.WriteLine("Invalid input");
                         break;
                 }
-            } while (!inMenu);
+            } while (inMenu);
         }
-        //Evaluates if the input is a valid item and if the hero can actually afford to purchace it, or if the user chooses to exit the shop
-        //othervise proceedes with the purchase
+        //Evaluates if the input is a valid item and if the hero can actually afford to purchase it, or if the user chooses to exit the shop
+        //otherwise proceeds with the purchase
         private static bool ValidatePurchase(Hero hero, List<Merchant> itemsx, List<Merchant> equipment)
         {
             bool inMenu = false;
@@ -75,7 +72,6 @@ namespace FantasyRpg.Shop
                                   " and press [Q] to exit shop\n" +
                                   ">>");
                 input = Console.ReadLine();
-            
                 if (Int32.TryParse(input, out intInput) && intInput <= itemsx.Count && intInput > 0)
                 {
                     if (hero.gold >= itemsx[intInput - 1].gold)
@@ -89,23 +85,25 @@ namespace FantasyRpg.Shop
                         Console.WriteLine("You do not have enough gold to purchase this");
                     }
                 }
-                else if(input == "q" || input == "Q")
+                if (Int32.TryParse(input, out intInput) && intInput > itemsx.Count)
+                {
+                Console.WriteLine("Invalid input option");
+                }
+                else if (input == "q" || input == "Q")
                 {
                     inMenu = true;
                 }
 
-            return inMenu;
+                return inMenu;
         }
-        //After validation of the purchase the item itemType is referensed and located in the switchstatement. It calls for the ItemEquip method and also then
+        //After validation of the purchase the item itemType is referenced and located in the switch statement. It calls for the ItemEquip method and also then
         //updates what the hero is currently wearing.
         public static void BuyItem(List<Merchant> itemsx, List<Merchant> equipment, Hero hero, int intInput)
         {
             //which item to equip
             var itemType = itemsx[intInput - 1].itemType;
-            
-            //All "equippment slots" so that they can be tracked. This definition is also carried on to compare which item is currently in that itemslot
+            //All "equipment slots" so that they can be tracked. This definition is also carried on to compare which item is currently in that item slot
             //because we need to remove it and its added attributes to our hero. Only applied to equipment rather than items(permanent buffs) in the shop
-
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
             switch (itemType)
             {
@@ -139,12 +137,8 @@ namespace FantasyRpg.Shop
                     break;
             }
             Console.ResetColor();
-            
-            
 
-            
-
-            //adds attributes from item to player when item is equiped
+            //adds attributes from item to player when item is equipped
             AddAttributes(itemsx, hero, intInput);
             HeroMethods.Updating(hero);
         }
@@ -165,24 +159,24 @@ namespace FantasyRpg.Shop
             Console.WriteLine($"You equipped {itemsx[intInput - 1].name}");
             return removeItem;
         }
-        //compares what the hero is currently wearing. Since the equipped item has a string we referens it below to locate the items position in the list
+        //compares what the hero is currently wearing. Since the equipped item has a string we reference it below to locate the items position in the list
         //which allows us to remove its attributes from the hero when item is removed.
         private static void RemoveAttributes(List<Merchant> equipment, Hero hero, int intInput, string itemType)
         {
             if (equipment[intInput].def != 0)
             {
                 hero.def -= equipment[intInput].def;
-                Console.WriteLine($"Removed {equipment[intInput].def} def");
+                Console.WriteLine($"Removed {equipment[intInput].def} defense");
             }
             if (equipment[intInput].str != 0)
             {
                 hero.str -= equipment[intInput].str;
-                Console.WriteLine($"Removed {equipment[intInput].str} str");
+                Console.WriteLine($"Removed {equipment[intInput].str} strength");
             }
             if (equipment[intInput].crit != 0)
             {
                 hero.crit -= equipment[intInput].crit;
-                Console.WriteLine($"Removed {equipment[intInput].crit} crit");
+                Console.WriteLine($"Removed {equipment[intInput].crit} critical");
             }
             if (equipment[intInput].dmg != 0)
             {
@@ -197,7 +191,7 @@ namespace FantasyRpg.Shop
             if (equipment[intInput].attackPower != 0)
             {
                 hero.attackPower -= equipment[intInput].attackPower;
-                Console.WriteLine($"Removed {equipment[intInput].attackPower} attackpower");
+                Console.WriteLine($"Removed {equipment[intInput].attackPower} attack power");
             }
         }
         //Evaluates stats on purchased item/equipment and adds it to hero
@@ -246,7 +240,7 @@ namespace FantasyRpg.Shop
             Console.ResetColor();
             
         }
-        //Method presents Armor and Weapons, compares heros current gear and displays basic information and also what will be gained/lossed or unchanged by
+        //Method presents Armor and Weapons, compares heroes current gear and displays basic information and also what will be gained/lose or unchanged by
         //getting an armor/weapon. 
         public static void ListItems(List<Merchant> items, List<Merchant> equipment, Hero hero)
         {
@@ -266,7 +260,6 @@ namespace FantasyRpg.Shop
                     Console.Write(" - Equipped");
                     Console.ResetColor();
                 }
-                
                 int itermId = 0;
                 if (equipment.Any(s => s.itemType.Equals(items[j].itemType)))
                 {
@@ -292,7 +285,7 @@ namespace FantasyRpg.Shop
                     if (equipment[myItem].attackPower != 0 || items[j].attackPower != 0)
                     {
                         var stat = items[j].attackPower - equipment[myItem].attackPower;
-                        Console.Write($" Attackpower: ");
+                        Console.Write($" Attack power: ");
                         stat = ColorOfGain(Convert.ToInt32(stat));
                         Console.Write($"{stat}");
                         Console.ResetColor();

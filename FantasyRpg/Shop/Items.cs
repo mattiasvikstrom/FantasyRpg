@@ -11,7 +11,6 @@ namespace FantasyRpg.Shop
         {
             List<Merchant> items = new List<Merchant>();
 
-
             items.Add(new Merchant
             {
                 name = "Redbull of Defense",
@@ -28,14 +27,14 @@ namespace FantasyRpg.Shop
             });
             items.Add(new Merchant
             {
-                name = "Amulet of Critical",
+                name = "Redbull of Critical strike",
                 itemType = "Amulet",
                 gold = 500,
                 crit = 5,
             });
             items.Add(new Merchant
             {
-                name = "Amulet of Masterness",
+                name = "Amulet of Mastering",
                 itemType = "Amulet",
                 gold = 800,
                 crit = 4,
@@ -43,21 +42,11 @@ namespace FantasyRpg.Shop
             });
             items.Add(new Merchant
             {
-                name = "Amulet of Shieldwall",
+                name = "Amulet of fury",
                 itemType = "Amulet",
                 gold = 400,
+                attackPower = 20,
             });
-            items.Add(new Merchant
-            {
-                name = "Uber of this",
-                itemType = "potion",
-                gold = 400,
-                crit = 10,
-                str = 3,
-                def = 3,
-            });
-
-
             return items;
         }
     }

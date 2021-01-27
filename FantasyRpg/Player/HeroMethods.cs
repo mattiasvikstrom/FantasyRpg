@@ -4,9 +4,8 @@ using FantasyRpg.Enemies;
 
 namespace FantasyRpg.Player
 {
-    class HeroMethods
+    static class HeroMethods
     {
-        
         //Hero attack Basic, normal and special , they differ in damage and special is a lower chance attack that heals the hero.
         public static float HeroAttackBasic(Hero hero, List<Monster> mob, float heroDamage, int b)
         {
@@ -30,7 +29,7 @@ namespace FantasyRpg.Player
         }
         public static float HeroAttackNormal(Hero hero, List<Monster> mob, float heroDamage, int b)
         {
-            Console.WriteLine("normal attack");
+            Console.WriteLine($"{hero.name} finds an opening and slashes {hero.weapon} across {mob[b].name}");
             heroDamage *= 1.2f;
             var critical = CriticalChance(hero);
             if (critical > 1)
@@ -51,7 +50,6 @@ namespace FantasyRpg.Player
         }
         public static float HeroAttackSpecial(Hero hero, List<Monster> mob, float heroDamage, int b)
         {
-            
             Console.WriteLine($"{hero.name} rushes {mob[b].name} with unseen ferocity!");
             Console.WriteLine($"{hero.name} uses [Blood Strike]!");
             heroDamage *= 2;
@@ -59,13 +57,10 @@ namespace FantasyRpg.Player
             Console.ForegroundColor = ConsoleColor.Green;
             if (critical > 1)
             {
-                
                 Console.WriteLine("Critical hit!");
-                
             }
             heroDamage *= critical;
             heroDamage -= mob[b].def;
-            
             if (heroDamage < 0)
             {
                 heroDamage = 0;
@@ -80,7 +75,6 @@ namespace FantasyRpg.Player
                 Console.WriteLine($"Overhealed: {(int)Math.Round(overHeal)} health");
                 hero.hp = hero.maxHp;
             }
-
             Console.ResetColor();
             heroDamage = (int)Math.Round(heroDamage);
             mob[b].hp -= heroDamage;
@@ -105,7 +99,7 @@ namespace FantasyRpg.Player
             }
             return heroDamage;
         }
-        //controls the fight between hero and oponent
+        //controls the fight between hero and opponent
         public static bool Battle(Hero hero)
         {
             Console.Clear();
@@ -115,7 +109,6 @@ namespace FantasyRpg.Player
 
             //generate monster for the battle
             List<Monster> mob = Monster.CreateMonster(hero);
-            
             //Get the correct placement of the monster in mob list
             int b = mob.Count - 1;
 
@@ -125,9 +118,8 @@ namespace FantasyRpg.Player
             int i = 0;
             int roundCounter = 0;
             bool battleOutcome = false;
-            
-            //turnbased fight. should player try to use potions? should combat be choicebased. attack, defend , heal, item?
-            //Add paus between attacks or turnbased with choices for attack, defend och potion/heal
+            //turn based fight. should player try to use potions? should combat be choice based. attack, defend , heal, item?
+            //Add pause between attacks or turn based with choices for attack, defend and potion/heal
             int roundVerify = 0;
 
             while (activeFight)
@@ -141,10 +133,10 @@ namespace FantasyRpg.Player
                     }
                     Continue(hero, mob, b);
                     Console.WriteLine($"BattleRound #{roundCounter}");
-                    
+
                     if (i % 2 == 0)
                     {
-                        //Method determens what attackmove hero should make randomly.
+                        //Method determent what attack move hero should make randomly.
                         float heroDamage = HeroDamage(hero);
                         heroDamage = HeroAttackList(hero, mob, heroDamage, b);
                         Console.WriteLine($"{hero.name} does {heroDamage} damage");
@@ -156,7 +148,6 @@ namespace FantasyRpg.Player
                         mob[b].MonsterCombat(hero, mob, b);
                         roundVerify++;
                     }
-                    
                 }
                 else if (hero.hp <= 0)
                 {
@@ -165,7 +156,7 @@ namespace FantasyRpg.Player
                 }
                 else
                 {
-                    //add experience and gold to player and if expmeter is >= full run the levelup method
+                    //add experience and gold to player and if exp meter is >= full run the level up method
                     activeFight = false;
                     hero.exp += mob[b].exp;
                     Game.TakeGold(hero, mob[b]);
@@ -198,39 +189,34 @@ namespace FantasyRpg.Player
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("You feel .. different.. more powerful\n" +
-                                  "You have accended to the class DeathKnight");
+                                  "You have ascended to the class DeathKnight");
                 Console.ResetColor();
                 //new class and new modifiers to those stats, higher value with each level up, from 2 -> 4
                 hero.className = "DeathKnight";
                 hero.strModifier = 4;
                 hero.maxHpModifier = 4;
-                //what else should be different about the DeathKnight.. necrotic damage added? mob resistance? ability that adds to random if class is deathknight.
-                //deathknight could have a frostaura active that damages enemy every turn.
+                //what else should be different about the DeathKnight.. necrotic damage added? mob resistance? ability that adds to random if class is death knight.
+                //death knight could have a frost aura active that damages enemy every turn.
             }
-
         }
         //method is called when the hero has met criteria for a level up
         public static void LvlUp(Hero hero)
         {
-            //notes stats before levelup to retrieve the gained amount
+            //notes stats before level up to retrieve the gained amount
             var currStr = hero.str;
             var currMaxHp = hero.maxHp;
-            
-
             if (hero.exp >= hero.maxExp)
             {
-                hero.exp -= hero.maxExp; //resets hero experience after levelup
-                hero.lvl = hero.lvl + 1; //adds a level, sufficient when no mob can give a player crazy experience amounts.
-                hero.Str = hero.str; //recalculates str since str is leveldependant for its value
-                hero.MaxHp = hero.maxHp; //recalculates hero maxhp since it is leveldependent for its value
-                hero.MaxExp = hero.maxExp; //recalculates maxExp required for next levelup
-                hero.hp = hero.maxHp; //heals player to full health after levelup
+                hero.exp -= hero.maxExp; //resets hero experience after level up
+                hero.lvl++; //adds a level, sufficient when no mob can give a player crazy experience amounts.
+                hero.Str = hero.str; //recalculates str since str is level dependent for its value
+                hero.MaxHp = hero.maxHp; //recalculates hero maxhp since it is level dependent for its value
+                hero.MaxExp = hero.maxExp; //recalculates maxExp required for next level up
+                hero.hp = hero.maxHp; //heals player to full health after level up
 
-                //gets the added value ontop of old stat value
+                //gets the added value on top of old stat value
                 currStr = hero.Str - currStr;
                 currMaxHp = hero.maxHp - currMaxHp;
-
-                //currDmg = hero.dmg - currDmg; //KOLLA OM SKADAN VERKAR NORMAL ANNARS KAN VI BEHÖVER REFRESHA SKADAN VID LEVEL UPP
 
                 //what did you gain?
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -247,10 +233,9 @@ namespace FantasyRpg.Player
                 }
             }
         }
-        //Evaluates the chance for a critical strike, the chance is dependent on the hero crit stat and chance increases by having higher stat value
+        //Evaluates the chance for a critical strike, the chance is dependent on the hero critical strike stat and chance increases by having higher stat value
         public static int CriticalChance(Hero hero)
         {
-
             int critChance = 1;
             Random crit = new Random();
             var critical = crit.Next(1, 101);
@@ -266,7 +251,6 @@ namespace FantasyRpg.Player
             bool activeFight = true;
             Random battleChance = new Random();
             var battle = battleChance.Next(1, 101);
-            Console.WriteLine($"******ChanceNumber: {battle} ********"); //remove later
 
             if (battle >= 11)
             {
@@ -284,20 +268,16 @@ namespace FantasyRpg.Player
         {
             int min = Convert.ToInt32(hero.minDamage);
             int max = Convert.ToInt32(hero.maxDamage);
-            var heroDamage = Game.RandomAttackDamage(min, max);
-
-            return heroDamage;
+            return Game.RandomAttackDamage(min, max);
         }
-        //Called between Hero and opponent turn and calls for an Return keypress
+        //Called between Hero and opponent turn and calls for an Return key press
         static void Continue(Hero hero, List<Monster> mob, int b)
         {
-
             if (hero.hp >= 0 && mob[b].hp >= 0)
             {
                 Console.WriteLine("Press [Enter] to continue");
                 while (Console.ReadKey().Key != ConsoleKey.Enter)
                 {
-
                 }
             }
         }
