@@ -74,11 +74,11 @@ namespace FantasyRpg.Player
         }
         public float WeaponDamage { get { return weaponDamage; } set { weaponDamage = weaponDamage; } } //should be == equipped weapon
         public float Str { get { return str; } set { str += lvl * strModifier; } } // calculates hero strength
-        public float AttackPower { get { return attackPower; } set { attackPower = attackPower + str * 2; } }
+        public float AttackPower { get { return attackPower; } set { attackPower += str * 2; } }
         public float MinDamage { get{ return minDamage; } set { minDamage = weaponDamage * attackPower / 32; } } //minimum damage to calculate random between min -> max.
         public float MaxDamage { get { return maxDamage; } set { maxDamage = weaponDamage * attackPower / 24; } }
         public float MaxHp { get { return maxHp; } set { maxHp += vit * lvl * maxHpModifier; } } //calculates hero maximum health
-        public float MaxExp { get { return maxExp; } set { maxExp = maxExp + 250 / 2; } } //calculates amount needed to level up 150 for first level up and 750 for last
+        public float MaxExp { get { return maxExp; } set { maxExp += 250 / 2; } } //calculates amount needed to level up 150 for first level up and 750 for last
         public float Def { get { return def; } set { def = value; } }
         public int Lvl { get { return lvl; } set { lvl = value; } }
         public override string ToString()

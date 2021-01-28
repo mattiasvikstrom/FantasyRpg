@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FantasyRpg.Enemies
 {
     class Rogue : Monster
     {
-       
         public Rogue()
         {
-
         }
-
         public Rogue(string _name)
         {
             name = _name;
-            NameRare = "Rogue Specialist";
             hp = 600;
             minDamage = 38;
             maxDamage = 60;
@@ -41,13 +35,5 @@ namespace FantasyRpg.Enemies
             return mobDamage;
         }
         //Chance to face a power powerful monster. not fully implemented
-        public override void Specialist()
-        {
-            //name = NameRare;
-            //hp *= 10 / 5;
-            //minDamage *= 10 / 8;
-            //maxDamage *= 10 / 8;
-        }
-        
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FantasyRpg.Enemies
 {
@@ -8,12 +6,10 @@ namespace FantasyRpg.Enemies
     {
         public Kuja()
         {
-
         }
         public Kuja(string _name)
         {
             name = _name;
-            NameRare = "Tranced Kuja";
             hp = 1300;
             minDamage = 45;
             maxDamage = 70;

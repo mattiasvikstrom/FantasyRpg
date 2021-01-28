@@ -72,7 +72,7 @@ namespace FantasyRpg.Player
             if(hero.hp > hero.maxHp)
             {
                 var overHeal = hero.hp - hero.maxHp;
-                Console.WriteLine($"Overhealed: {(int)Math.Round(overHeal)} health");
+                Console.WriteLine($"Over healed: {(int)Math.Round(overHeal)} health");
                 hero.hp = hero.maxHp;
             }
             Console.ResetColor();

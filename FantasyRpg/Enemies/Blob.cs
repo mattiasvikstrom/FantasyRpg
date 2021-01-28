@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FantasyRpg.Enemies
 {
@@ -8,12 +6,10 @@ namespace FantasyRpg.Enemies
     {
         public Blob()
         {
-
         }
         public Blob(string _name)
         {
             name = _name;
-            NameRare = "Crimson Blob";
             hp = 600;
             minDamage = 36;
             maxDamage = 55;
@@ -36,13 +32,6 @@ namespace FantasyRpg.Enemies
             Console.WriteLine($"{name} starts glowing, and casts Fira magic on you!");
             mobDamage *= 2;
             return mobDamage;
-        }
-        public override void Specialist()
-        {
-            //name = NameRare;
-            //hp *= 10;
-            //minDamage *= 10;
-            //maxDamage *= 10;
         }
     }
 }

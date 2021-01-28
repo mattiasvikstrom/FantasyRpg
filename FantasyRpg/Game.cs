@@ -6,8 +6,6 @@ using FantasyRpg.Enemies;
 using FantasyRpg.LocalInn;
 using System.Threading;
 
-
-
 namespace FantasyRpg
 {
     static class Game
@@ -121,12 +119,11 @@ namespace FantasyRpg
         {
             if (heroName == "Robin" || heroName == "Isshin")
             {
-                hero.str += 100;
+                hero.str += 50;
                 hero.maxHp += 9999;
                 hero.hp = hero.maxHp;
-                hero.attackPower += 666;
+                hero.attackPower += 120;
                 hero.gold += 9999999;
-                hero.def += 100;
 
                 armor.Add(new Merchant
                 {

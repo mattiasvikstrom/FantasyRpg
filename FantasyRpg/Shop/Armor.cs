@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-
 namespace FantasyRpg.Shop
 {
     class Armor : Merchant
@@ -70,10 +69,9 @@ namespace FantasyRpg.Shop
                 str = 1,
             });
 
-
             return equipment;
         }
-        //List with the Hero armor that can be purchaced in the shop
+        //List with the Hero armor that can be purchased in the shop
         public static List<Merchant> AddArmor()
         {
             List<Merchant> armor = new List<Merchant>();

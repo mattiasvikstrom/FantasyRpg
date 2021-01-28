@@ -6,12 +6,10 @@ namespace FantasyRpg.Enemies
     {
         public Kefka()
         {
-
         }
         public Kefka(string _name)
         {
             name = _name;
-            NameRare = "Kefka, God of magic";
             hp = 1500;
             minDamage = 40;
             maxDamage = 100;

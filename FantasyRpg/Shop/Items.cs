@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FantasyRpg.Player;
+﻿using System.Collections.Generic;
 
 namespace FantasyRpg.Shop
 {

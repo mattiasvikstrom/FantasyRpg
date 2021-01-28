@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FantasyRpg.Enemies
 {
@@ -8,12 +6,10 @@ namespace FantasyRpg.Enemies
     {
         public Cactuar()
         {
-
         }
         public Cactuar(string _name)
         {
             name = _name;
-            NameRare = "Mad Cactuar";
             hp = 1200;
             minDamage = 1;
             maxDamage = 80;

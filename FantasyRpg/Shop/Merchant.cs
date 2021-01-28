@@ -136,7 +136,7 @@ namespace FantasyRpg.Shop
                     hero.weapon = itemsx[intInput - 1].name;
                     break;
             }
-            Console.ResetColor();
+            
 
             //adds attributes from item to player when item is equipped
             AddAttributes(itemsx, hero, intInput);
@@ -154,9 +154,11 @@ namespace FantasyRpg.Shop
                 RemoveAttributes(equipment, hero, removeItem, itemType);
                 equipment.RemoveAt(removeItem);
             }
+            Console.ResetColor();
             equipment.Add(itemsx[intInput - 1]);
-
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"You equipped {itemsx[intInput - 1].name}");
+            Console.ResetColor();
             return removeItem;
         }
         //compares what the hero is currently wearing. Since the equipped item has a string we reference it below to locate the items position in the list
@@ -193,11 +195,12 @@ namespace FantasyRpg.Shop
                 hero.attackPower -= equipment[intInput].attackPower;
                 Console.WriteLine($"Removed {equipment[intInput].attackPower} attack power");
             }
+            
         }
         //Evaluates stats on purchased item/equipment and adds it to hero
         public static void AddAttributes(List<Merchant> items, Hero hero, int intInput)
         {
-            //if the item purchaced has more than 0 in the possible stats avaliable for items then it will be added from the chosen item.
+            //if the item purchased has more than 0 in the possible stats available for items then it will be added from the chosen item.
             //leaves me to be able to only add new items and not having to worry about anything else for the shop part!
             //since an item can have multiple stats on it. 
             Console.ForegroundColor = ConsoleColor.Green;
@@ -236,6 +239,21 @@ namespace FantasyRpg.Shop
                     Console.WriteLine("You have reached the cap for crit, any stat above cap will not aid");
                     Console.ResetColor();
                 }
+            }
+            if (items[intInput - 1].hp != 0)
+            {
+                if (hero.hp + items[intInput - 1].hp < hero.MaxHp)
+                {
+                    hero.hp += items[intInput - 1].hp;
+                    Console.WriteLine($"Healed {items[intInput - 1].hp} Health");
+                    Console.WriteLine($"{hero.hp} / {hero.MaxHp}");
+                }
+                else
+                {
+                    hero.hp = hero.MaxHp;
+                    Console.WriteLine($"You are back to full health!");
+                }
+                
             }
             Console.ResetColor();
             

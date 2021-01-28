@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FantasyRpg.Enemies
 {
@@ -8,12 +6,10 @@ namespace FantasyRpg.Enemies
     {
         public Sephiroth()
         {
-
         }
         public Sephiroth(string _name)
         {
             name = _name;
-            NameRare = "Safer Sephiroth";
             hp = 1400;
             minDamage = 40;
             maxDamage = 90;

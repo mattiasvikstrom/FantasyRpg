@@ -7,7 +7,6 @@ namespace FantasyRpg.Enemies
     abstract class Monster : IMonster
     {
         public string name { get; set; }
-        public string NameRare { get; set; }
         public float hp { get; set; }
         public int minDamage { get; set; }
         public int maxDamage { get; set; }
@@ -84,11 +83,6 @@ namespace FantasyRpg.Enemies
             Console.WriteLine($"{hero.name} has hp: {hero.hp} left\n");
         }
 
-        //Chance to face a specialist version of the opponent with increased stats
-        public virtual void Specialist()
-        {
-            //not implemented yet
-        }
         //Method evaluates current level of the hero to determine which monsters are to be randomly chosen for battle
         public static int CheckLevel(Hero hero)
         {

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FantasyRpg.Enemies
 {
@@ -8,12 +6,10 @@ namespace FantasyRpg.Enemies
     {
         public Seymour()
         {
-
         }
         public Seymour(string _name)
         {
             name = _name;
-            NameRare = "Seymour Omnis";
             hp = 1300;
             minDamage = 40;
             maxDamage = 85;

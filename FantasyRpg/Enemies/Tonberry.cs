@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FantasyRpg.Enemies
 {
@@ -8,12 +6,10 @@ namespace FantasyRpg.Enemies
     {
         public Tonberry()
         {
-
         }
         public Tonberry(string _name)
         {
             name = _name;
-            NameRare = "Golden Tonberry";
             hp = 1000;
             minDamage = 37;
             maxDamage = 60;

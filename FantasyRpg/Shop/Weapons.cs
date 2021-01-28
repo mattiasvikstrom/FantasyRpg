@@ -4,7 +4,7 @@ namespace FantasyRpg.Shop
 {
     class Weapons : Merchant
     {
-        //Adding of all the avaliable weapons avaliable to be purchased at the shop
+        //Adding of all the available weapons available to be purchased at the shop
         public static List<Merchant> AddWeapon()
         {
             List<Merchant> weapon = new List<Merchant>();

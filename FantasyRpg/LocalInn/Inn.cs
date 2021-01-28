@@ -4,25 +4,21 @@ using FantasyRpg.Player;
 using FantasyRpg.Shop;
 using System.Threading;
 
-
 namespace FantasyRpg.LocalInn
-{
+{ 
     class Inn : Merchant
     {
-        //Mainmenu for the Inn where the hero can rest for the night or eat a meal
+        //Main menu for the Inn where the hero can rest for the night or eat a meal
         public static void VisitInn(Hero hero, List<Merchant> food)
         {
             Console.Clear();
-            float gold = 500;
-            
+            const float gold = 500;
             Console.WriteLine($"1. Spend the night at the Inn? {gold} gold per night\n" +
                               "2. Eat something\n" +
                               "press [Q] to exit Inn");
             Console.WriteLine(">>");
             string input = Console.ReadLine();
-            
             int intInput;
-                
                 switch (input)
                 {
                     case "1":
@@ -50,7 +46,7 @@ namespace FantasyRpg.LocalInn
                         }
                     else if (input == "q" || input == "Q")
                         {
-                        break;
+                            break;
                         }
                         else
                         {
@@ -61,7 +57,7 @@ namespace FantasyRpg.LocalInn
                         break;
                 }
         }
-        //used to display attributegains on food and items that are not equipped(think consumables or enhancements) its a flat gain
+        //used to display attribute gains on food and items that are not equipped(think consumables or enhancements) its a flat gain
         //so it is slightly different than the ListItems() method.
         public static void ListEnhancements(List<Merchant> food)
         {
@@ -91,11 +87,16 @@ namespace FantasyRpg.LocalInn
                     var ap = food[j].attackPower;
                     Console.Write($" Attackpower: {ap}");
                 }
+                if (food[j].hp != 0)
+                {
+                    var ap = food[j].hp;
+                    Console.Write($" Healing: {ap}");
+                }
                 j++;
             }
             
         }
-        //Handles the eating of purchased food item, checka if criteria for gold is met by the hero
+        //Handles the eating of purchased food item, check if criteria for gold is met by the hero
         public static void EatFood(List<Merchant> food, Hero hero, int intInput)
         {
             if (hero.gold >= food[intInput - 1].gold)
@@ -108,7 +109,7 @@ namespace FantasyRpg.LocalInn
                 Console.WriteLine("You do not have enough gold..");
             }
         }
-        //List of avaliable food to be purchased at the inn
+        //List of available food to be purchased at the inn
         public static List<Merchant> AddFood()
         {
             List<Merchant> food = new List<Merchant>();
@@ -118,6 +119,7 @@ namespace FantasyRpg.LocalInn
                 name = "Harty stew",
                 itemType = "food",
                 gold = 250,
+                hp = 50,
                 def = 2,
                 vit = 2,
             });
@@ -126,6 +128,7 @@ namespace FantasyRpg.LocalInn
                 name = "Moonberry cake",
                 itemType = "food",
                 gold = 250,
+                hp = 50,
                 str = 2,
                 crit = 2,
             });
@@ -134,6 +137,7 @@ namespace FantasyRpg.LocalInn
                 name = "Roasted Quail",
                 itemType = "food",
                 gold = 350,
+                hp = 100,
                 def = 2,
                 maxHp = 30,
             });
@@ -142,6 +146,7 @@ namespace FantasyRpg.LocalInn
                 name = "Homemade Cherry Pie",
                 itemType = "food",
                 gold = 550,
+                hp = 200,
                 attackPower = 20,
                 str = 4,
             });
