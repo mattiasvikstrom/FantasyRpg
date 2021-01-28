@@ -68,10 +68,12 @@ namespace FantasyRpg.Shop
 
                 string input;
                 int intInput;
-                Console.WriteLine("\nEnter number of item to buy, " +
-                                  " and press [Q] to exit shop\n" +
-                                  ">>");
+                Console.Write("\nEnter number of the item you want buy, \n" +
+                              "and press [Q] to exit shop\n" +
+                              ">>");
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 input = Console.ReadLine();
+                Console.ResetColor();
                 if (Int32.TryParse(input, out intInput) && intInput <= itemsx.Count && intInput > 0)
                 {
                     if (hero.gold >= itemsx[intInput - 1].gold)
